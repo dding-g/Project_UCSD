@@ -33,10 +33,18 @@ final class HomeController extends BaseController
         return $response;
     }
 
-//View Homepage
+    //View Homepage
     public function viewHome(Request $request, Response $response, $args)
     {
       $this->view->render($response, 'index_home.twig');
       return $response;
+    }
+
+    //AQ data return
+    public function aq_data_response(Request $request, Response $response, $args)
+    {
+        $usn_json = file_get_contents('php://input');
+        $usn_data = json_decode($usn_json, true);
+        
     }
 }

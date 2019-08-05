@@ -18,16 +18,18 @@ final class SignOutController
 
     $user_data = $request->getParsedBody();
 
-    $is_sign_out = $this->db_model->is_sign_out_update($user_data['usn']);
-    
-    if($is_sign_out == 1)
-      return $response->withJson("{'is_sign_in' : 0}");
-    else if($is_sign_out == 0)
-      return $response->withJson("{'error' : 'unexcepted error'}");
-    else if($is_sign_out == 2)
-      return $response->withJson("{'error' : 'USN not found in DB or Already value is in DB'}");
-    else
-      return $response->withJson("{'error' : $is_sign_out}");
+    $result_json = $this->db_model->is_sign_out_update($user_data['usn']);
+    $result = json_decode($result_json);
+
+    return $response->withJson(json_encode($result));
   }
   
+  public function android_sign_out_process(Request $request, Response $response, $args)  {
+
+    $user_data_json = file_get_contents('php://input');
+    $user_data = json_decode($user_data_json, true);
+
+    return $this->db_model->is_sign_out_update($user_data['usn']);
+  }
+
 }

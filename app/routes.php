@@ -39,6 +39,9 @@ $app->post('/android/user/sign-in/process/', 'App\Controller\SignInController:an
 // ==============Sign-out=================
 $app->post('/qi/user/sign-out/process', 'App\Controller\SignOutController:sign_out_process')
     ->setName('sign_out_process');
+    
+$app->post('/android/user/sign-out/process', 'App\Controller\SignOutController:android_sign_out_process')
+    ->setName('sign_out_process');
 //======================================
 
 // ==============Change Password=================
@@ -66,12 +69,12 @@ $app->post('/qi/device/aq_record', 'App\Controller\SensorManagement:airQuality_r
 
 $app->post('/qi/device/registrate_process', 'App\Controller\SensorManagement:sensor_registration_process')
     ->setName('airQuality_record');
-    
-$app->post('/android/device/deregistrate_process', 'App\Controller\SensorManagement:android_sensor_deregistration_process')
-    ->setName('airQuality_record');
+
+$app->post('/qi/device/deregistrate_process', 'App\Controller\SensorManagement:web_sensor_deregistration_process')
+    ->setName('web_sensor_deregistration_process');
 
 $app->post('/android/device/deregistrate_process', 'App\Controller\SensorManagement:android_sensor_deregistration_process')
-    ->setName('airQuality_record');
+    ->setName('android_sensor_deregistration_process');
 
 $app->post('/qi/device/list_view', 'App\Controller\SensorManagement:web_device_list_view_process')
     ->setName('android_device_list_view_process');

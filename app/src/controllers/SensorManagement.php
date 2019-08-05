@@ -42,7 +42,7 @@ final class SensorManagement extends BaseController
 
     $air_q_status = $this->sensor_db_model->air_quality_data_record($air_q_data);
 
-    return $this->sensor_db_model->get_deviceList_usn($air_q_status);
+    return $air_q_status;
   }
 
 
