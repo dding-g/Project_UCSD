@@ -33,30 +33,23 @@ final class SignUPController extends BaseController
   {
     $user_data_json = $this->db_model->getTempUserData_Using_AuthCode($args['authorized_code']);
     $user_data_arr = json_decode($user_data_json, true);
-    //when comparing true, INSERT user_authorized table and DELETE user_temporary table tuple
-    if($args['authorized_code'] == $user_data_arr['verification_code'])
-    {
-       // set data in user_authorized and delete temp data
-      if($this->db_model->setUserData_userAuthTable($user_data_arr)){
-        $this->db_model->deleteData_userTempTable($user_data_arr);
-        echo ("<script language=javascript> 
-                alert('Success Authorized!! Welcome to Kangaroo!!');
-                location.href='http://teama-iot.calit2.net/';
-              </script>");
-        return 1;
-      }
-      else{
-        echo ("<script language=javascript> 
-                alert('Fail to Authorized!!');
-                location.href='http://teama-iot.calit2.net/';
-              </script>");
-        return 0;
-      }
+
+        // Not found Exception add 2
+    if($user_data_arr['result_code'] == 1){
+        //when comparing true, INSERT user_authorized table and DELETE user_temporary table tuple
+      
+        // set data in user_authorized and delete temp data
+      $this->db_model->setUserData_userAuthTable($user_data_arr);
+      $this->db_model->deleteData_userTempTable($user_data_arr);
+      echo ("<script language=javascript> 
+              alert('Success Authorized!! Welcome to Kangaroo!!');
+              location.href='http://teama-iot.calit2.net/';
+            </script>");      
+
     }else{
       echo ("<script language=javascript> 
                 alert('wrong verification code!!');
-              </script>");
-      return 0;
+            </script>");
     }
 
   }
@@ -67,35 +60,41 @@ final class SignUPController extends BaseController
   {
       $user_data = $request->getParsedBody();
 
-      $user_data['hashed_password'] = password_hash($user_data['Password'], PASSWORD_DEFAULT);
-      $user_data['authorized_code'] = $this->make_authorized_code();
+      $result = $this->db_model->check_exist_user_data($user_data);
+      $result_code = json_decode($result, true);
 
-      $is_sign_up = $this->db_model->addUser($user_data);
+      if($result_code['result_code'] == 1){
+        $user_data['hashed_password'] = password_hash($user_data['Password'], PASSWORD_DEFAULT);
+        $user_data['authorized_code'] = $this->make_authorized_code();
 
-      $email_address = $user_data['Email'];
+        $is_sign_up = $this->db_model->addUser($user_data);
 
+        $email_address = $user_data['Email'];
 
-      if($is_sign_up == 1){
-        $this->emailconfig->sendMail($user_data['Email'], $user_data['authorized_code']);
-        echo ("<script language=javascript> 
-                alert('Send Email complete!! Please check email !!');
-                location.href='http://teama-iot.calit2.net/';
-              </script>");
-        return 1;
-      }else if($is_sign_up == 6){
-        echo ("<script language=javascript> 
-                alert('Already exist email!');
-                location.href='http://teama-iot.calit2.net/qi/sign-in';
-              </script>");
-        return 6;
+        if($is_sign_up == 1){
+          $this->emailconfig->sendMail($user_data['Email'], $user_data['authorized_code']);
+          echo ("<script language=javascript> 
+                  alert('Send Email complete!! Please check email !!');
+                  location.href='http://teama-iot.calit2.net/';
+                </script>");
+        }else{
+          echo ("<script language=javascript> 
+                  alert('Sorry. unexcepted error occurred
+                        /\n/error : $is_sign_up');
+                  location.href='http://teama-iot.calit2.net/';
+                </script>");
+        }
+
       }else{
         echo ("<script language=javascript> 
-                alert('Sorry. unexcepted error occurred
-                      /\n/error : $is_sign_up');
-                location.href='http://teama-iot.calit2.net/';
-              </script>");
-        return 0;
+                  alert('Already exist email!');
+                  location.href='http://teama-iot.calit2.net/qi/sign-in';
+                </script>");
       }
+      
+
+
+      
    }
 
    //mobile sign up process method

@@ -40,11 +40,19 @@ final class HomeController extends BaseController
       return $response;
     }
 
-    //AQ data return
-    public function aq_data_response(Request $request, Response $response, $args)
+    //WEB AQ data return
+    public function web_aq_data_response(Request $request, Response $response, $args)
+    {
+        $json_data = $this->sensor_db_model->aq_realtime_data();
+
+        return $response->withJson(json_decode($json_data));
+    }
+
+    //ANDROID AQ data return
+    public function android_aq_data_response(Request $request, Response $response, $args)
     {
         $usn_json = file_get_contents('php://input');
         $usn_data = json_decode($usn_json, true);
-        
+
     }
 }

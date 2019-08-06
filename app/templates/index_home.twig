@@ -1,6 +1,4 @@
-<?php
-  session_start();
-?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +21,7 @@
 
 </head>
 
-<body onload = "loadMap()" id="page-top">
+<body id="page-top">
 
   <!-- Page Wrapper -->
   <div id="wrapper">
@@ -269,50 +267,32 @@
 
   {# Google Map API #}
     <script>
-        // fake JSON call
-        function getJSONMarkers() {
-          const markers = [
-            {
-              name:  "Rixos The Palm",
-              location: [25.1212, 55.1535]
-            },
-            {
-              name: "Shangri-La Hotel",
-              location: [25.2084, 55.2719]
-            },
-            {
-              name: "Grand Hyatt",
-              location: [25.2285, 55.3273]
-            }
-          ];
-          return markers;
+        function loadMap(aq_data_load) {
+          // Initialize Google Maps
+          var mapOptions = {
+            center:new google.maps.LatLng(aq_data_load.latitude, aq_data_load.longitude),
+            zoom: 11,
+          }
+          map_setting = new google.maps.Map(document.getElementById("map"), mapOptions);
         }
 
-        function loadMap() {
-          // Initialize Google Maps
-          const mapOptions = {
-            center:new google.maps.LatLng(25.2048, 55.2708),
-            zoom: 11
-          }
-          const map = new google.maps.Map(document.getElementById("map"), mapOptions);
+        //get array AirQuality data
+        function setPin(aq_data){
 
-          // Load JSON Data
-          const hotelMarkers = getJSONMarkers();
-
-          // Initialize Google Markers
-          for(hotel of hotelMarkers) {
+          $.each(aq_data,function(index, item){
             let marker = new google.maps.Marker({
-              map: map,
-              position: new google.maps.LatLng(hotel.location[0], hotel.location[1]),
-              title: hotel.name
+              map: map_setting,
+              position: new google.maps.LatLng(item['latitude'], item['longitude']),
+              title: item['usn']
             })
-          }
+          });
+
         }
     </script>
 
     <!--Google Map API-->
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgrRKZjmZGHOCm2Ohq0PqnVoAJVR2u7Zg&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgrRKZjmZGHOCm2Ohq0PqnVoAJVR2u7Zg&callback=loadMap">
     </script>
 
 
@@ -356,8 +336,24 @@
         $("#userDropdown").prop("enable", true);
         document.getElementById('email').innerHTML = email;
       }
+
+      var posting = $.post( "/qi/device/aq_data", { usn: localStorage.getItem('usn') } );
+      posting.done( function (data) {
+            loadMap(data[0]);
+      });
+
     });
 
+     $( window ).load(function() {
+        setInterval(
+          function(){
+            var posting = $.post( "/qi/device/aq_data", { usn: localStorage.getItem('usn') } );
+            posting.done( function (data) {
+              setPin(data);
+            });
+          },
+        5000);
+     });
     function sign_in_btn_click(){
       window.location.href = "/qi/sign-in";
     }

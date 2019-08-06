@@ -21,7 +21,9 @@ $app->post('/qi/sign-up/process', 'App\Controller\SignUPController:sign_up_proce
 
 $app->post('/android/user/sign-up/process', 'App\Controller\SignUPController:mobile_sign_up_process')
     ->setName('android_sign_up_process');
-
+    
+$app->post('/android/user/get_user_data', 'App\Model\DBModel:getUserInfo_usn')
+    ->setName('getUserInfo_usn');    
 //======================================
 
 // ==============sign-in=================
@@ -50,6 +52,9 @@ $app->get('/qi/user/change_password', 'App\Controller\MypageController:change_pw
 
 $app->post('/qi/user/change_password/process', 'App\Controller\MypageController:web_change_pw_process')
     ->setName('web_change_pw_process');
+
+$app->post('/android/user/change_password/process', 'App\Controller\MypageController:android_change_pw_process')
+    ->setName('android_change_pw_process');    
 //========================================
 
 
@@ -92,4 +97,9 @@ $app->get('/qi/user/mypage', 'App\Controller\MypageController:mypage_view')
 // ==============Profile=================
 $app->get('/qi/user/profile', 'App\Controller\ProfileController:profile_view')
     ->setName('profile_view');
+//======================================
+
+// ==============HOME PAGE=================
+$app->post('/qi/device/aq_data', 'App\Controller\HomeController:web_aq_data_response')
+    ->setName('web_aq_data_response');
 //======================================

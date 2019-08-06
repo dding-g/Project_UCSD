@@ -110,7 +110,10 @@ $container['App\Controller\SensorManagement'] = function ($c) {
     return new App\Controller\SensorManagement($c);
 };
 
-
+$container['App\Model\DBModel'] = function ($c) {
+    $db = $c->get('db');
+    return new App\Model\DBModel($c);
+};
 
 // -----------------------------------------------------------------------------
 // Model factories
