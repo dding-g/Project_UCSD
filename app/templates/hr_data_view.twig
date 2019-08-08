@@ -1,0 +1,659 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>KANGAROO HOME</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="/vendor/fontawesome-free//css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+  <style>
+
+  .btn { 
+    width:80px; 
+    height:40px; 
+    border:1px #3399dd solid; 
+    margin:15px auto; 
+    background-color:#66aaff; 
+    text-align:center; 
+    cursor: pointer; 
+    color:#FFFFFF; 
+    transition:all 0.9s, 
+    color 0.3; 
+    }
+
+  .fa-beat {
+    animation:fa-beat 5s ease infinite;
+  }
+  @keyframes fa-beat {
+    0% {
+      transform:scale(1);
+    }
+    5% {
+      transform:scale(1.25);
+    }
+    20% {
+      transform:scale(1);
+    }
+    30% {
+      transform:scale(1);
+    }
+    35% {
+      transform:scale(1.25);
+    }
+    50% {
+      transform:scale(1);
+    }
+    55% {
+      transform:scale(1.25);
+    }
+    70% {
+      transform:scale(1);
+    }
+  }
+
+
+  body {
+    text-align:center;
+    background:#111;
+    color:#aaa;
+    font:1em sans-serif;
+  }
+
+
+  .heart {
+    color:red;
+  }
+
+  </style>
+</head>
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+        <div class="sidebar-brand-icon rotate-n-15">
+          <i class="fas fa-laugh-wink"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">KANGAROO<sup>HOME</sup></div>
+      </a>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item active">
+        <a class="nav-link" href="index.html">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>MENU</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        MENU
+      </div>
+      
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>AirQuality Data</span>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">AirQuality Data</h6>
+            <a class="collapse-item" href="buttons.html">Historical Data</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Nav Item - Utilities Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+          <i class="fas fa-fw fa-wrench"></i>
+          <span>Utilities</span>
+        </a>
+        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Custom Utilities:</h6>
+            <a class="collapse-item" href="utilities-color.html">Colors</a>
+            <a class="collapse-item" href="utilities-border.html">Borders</a>
+            <a class="collapse-item" href="utilities-animation.html">Animations</a>
+            <a class="collapse-item" href="utilities-other.html">Other</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        Addons
+      </div>
+
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>Pages</span>
+        </a>
+        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Login Screens:</h6>
+            <a class="collapse-item" href="login.html">Login</a>
+            <a class="collapse-item" href="register.html">Register</a>
+            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+            <div class="collapse-divider"></div>
+            <h6 class="collapse-header">Other Pages:</h6>
+            <a class="collapse-item" href="404.html">404 Page</a>
+            <a class="collapse-item" href="blank.html">Blank Page</a>
+          </div>
+        </div>
+      </li>
+
+    
+      <!-- Nav Item - Tables -->
+      <li class="nav-item">
+        <a class="nav-link" href="tables.html">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Tables</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block">
+
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+          <!-- Sidebar Toggle (Topbar) -->
+          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
+
+
+
+          <!-- Topbar Navbar -->
+          <ul class="navbar-nav ml-auto">
+
+            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+            <li class="nav-item dropdown no-arrow d-sm-none">
+              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-search fa-fw"></i>
+              </a>
+              <!-- Dropdown - Messages -->
+              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                <form class="form-inline mr-auto w-100 navbar-search">
+                  <div class="input-group">
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search fa-sm"></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </li>
+
+           
+
+            <div class="topbar-divider d-none d-sm-block"></div>
+
+            <!-- Nav Item - User Information -->
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small" id = "email">
+                </span>
+              </a>
+              <!-- Dropdown - User Information -->
+              <div id = "user_info_dropdown"  class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="/qi/user/profile">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Profile
+                </a>
+                <a class="dropdown-item" href="/qi/user/mypage">
+                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Settings
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="qi/home" data-toggle="modal" data-target="#logoutModal">
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Logout
+                </a>
+              </div>
+            </li>
+
+          </ul>
+
+        </nav>
+        <!-- End of Topbar -->
+<div class="container-fluid">
+
+    <div>
+      <p class="heart">
+        <i class="fa fa-heart fa-4x fa-beat"></i>
+      </p>
+    </div>
+</hr>
+  <div style = "text-align: center;">
+    <div id = "map" style = "display: inline-block; width:640px; height:480px;margin: auto;"></div>
+
+    <div style ="display: inline-block; width:810px; height:480px; margin: auto;">
+      <div id="chart_div_realtime_heart"></div>
+    </div>
+
+    <div style = "width:640px; height:100px; text-align: center;margin: auto;">
+
+      <div style = 'margin: auto'>
+        <input type = "text" id = "date_start" onchange = "display_period_start()"> ~
+        <input type = "text" id = "date_end" onchange = "display_period_end()">
+        <button id = "aq_data_search" class = "btn btn-primary btn-user btn-block">Search!</button>
+      </div>
+      
+    </div>
+
+  </div>
+
+
+
+</div>
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto" style = 'float:bottom'>
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; Your Website 2019</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <form id = 'sign_out_form'>
+            <input type = "submit" class="btn btn-primary" value="Logout">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ajax Jquery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+  
+
+
+
+  <script>
+    $('#sign_out_form').submit(function( event ) {
+      var posting = $.post( "/qi/user/sign-out/process", { usn: localStorage.getItem('usn') } );
+
+      posting.done(function( data ) {
+
+        localStorage.removeItem('email');
+        localStorage.removeItem('usn');
+        localStorage.removeItem('firstname');
+        localStorage.removeItem('lastname');
+        localStorage.removeItem('nickname');
+        
+
+        window.location.replace("/");
+
+        alert('sign out process!');
+
+      });
+    });
+
+    $("#aq_data_search").click(function(event){
+      setPin('all');
+    });
+ 
+      function drawChart_clicked_marker(clicked_ssn) {
+        var posting = $.post( "/qi/device/aq_data/historical/chartdata/process",
+        {date_start : $("#date_start").val(), date_end : $('#date_end').val(), ssn : clicked_ssn});
+        
+        posting.done(function(data){
+          // parse the json data
+            var oobj = data;
+
+            var s_array = ["CO", "SO2", "O3", "NO2", "PM2_5", "temperature"];
+            var title_array = ["CO Chart", "SO2 Chart", "O3 Chart", "NO2 Chart", "PM2.5 Chart", "temperature Chart"];
+
+            for (i=0; i<s_array.length; i++) {
+                // want to grab set of data for single sensor
+                var newData = JSON.stringify(oobj[s_array[i]][0]);
+
+                // Create our data table out of reduced json
+                var data = new google.visualization.DataTable(newData);
+
+                var options = {
+                    width: 800, height: 480,
+                    title: title_array[i],
+                    hAxis: {
+                        title: 'Sources', 
+                        slantedText: true
+                    }
+                };
+
+                var chart = new google.visualization.LineChart(document.getElementById('chart_div_' + s_array[i]));
+                chart.draw(data, options);
+            }
+        });
+    }
+  </script>
+
+
+
+  <script>
+    $(document).ready(function(){
+      var email = localStorage.getItem('email');
+      var usn = localStorage.getItem('usn');
+
+      if(usn == null){
+        document.getElementById('email').innerHTML = "<Button class='btn btn-primary btn-user btn-block' onclick = 'sign_in_btn_click()'>SIGN IN</Button>";
+        $("#userDropdown").prop("disabled", true);
+      }else{
+        $("#userDropdown").prop("enable", true);
+        document.getElementById('email').innerHTML = email;
+      }
+      $( "#date_start" ).datepicker({
+        dateFormat: 'yy-mm-dd'
+      });
+
+      $( "#date_end" ).datepicker({
+        dateFormat: 'yy-mm-dd'
+      });
+    });
+
+      //Show Google Map When Start
+    $( window ).load(function() {
+          loadMap();
+          google.load("visualization", "1", {packages:["corechart"]});
+
+          // Display Marker when move Map
+          map_setting.addListener('idle', function(){
+              // update the coordinates here
+              var bounds = map_setting.getBounds();
+              ne = bounds.getNorthEast(); // LatLng of the north-east corner
+              sw = bounds.getSouthWest(); // LatLng of the south-west corder
+
+              setPin('all');
+          });//end listener
+
+          setPin('all');
+
+    });//end window.load
+
+    function sign_in_btn_click(){
+      window.location.href = "/qi/sign-in";
+    }
+  </script>
+
+  {# Google Map API #}
+    <script>
+      function loadMap(aq_data_load) {  
+          // Initialize Google Maps
+          var mapOptions = {
+            center:new google.maps.LatLng(32.883002, -117.235040),
+            zoom: 11,
+          }
+          map_setting = new google.maps.Map(document.getElementById("map"), mapOptions);
+          gmarker = [];
+          gcircle = [];
+
+      }
+
+        //get array AirQuality data
+        function setPin(aqi_type){
+            
+          var posting = $.post( "/qi/device/aq_data/historical/process", 
+          { lat_min : sw.lat(), lng_min : sw.lng(), lat_max : ne.lat(), lng_max : ne.lng() ,
+            date_start : $('#date_start').val(),  date_end : $('#date_end').val(), usn : 19} );
+              
+          posting.done( function (data) {
+
+            for(var i = 0 ; i < gmarker.length ; i ++){
+              if(gmarker[i].getMap() != null){
+                gmarker[i].setMap(null);
+              }
+              
+            }
+
+
+            for(var i = 0 ; i < gcircle.length ; i++){
+              if(gcircle[i].getMap() != null){
+                gcircle[i].setMap(null);
+              }
+            }
+
+            var image = {
+                    url:  '/img/kangaroo_pin.png',
+                    scaledSize: new google.maps.Size(50, 50) // scaled size
+                  };
+
+
+            if(aqi_type == 'all'){
+              
+              $.each(data,function(index, item){
+
+                if(index != 'result_code' && index != 'message'){
+                  
+                  var marker = new google.maps.Marker({
+                    map: map_setting,
+                    position: new google.maps.LatLng(item['latitude'], item['longitude']),
+                    ssn : item['ssn'],
+                    icon : image
+                  });
+
+                  var infowindow = new google.maps.InfoWindow();
+
+                  gmarker.push(marker);
+
+                  marker.addListener('click', function() {
+                    infowindow.setContent("<p>AQI_CO : " + item['CO'] + 
+                                          "</br>AQI_SO2 : " + item['SO2'] + 
+                                          "</br>AQI_O3 : " + item['O3'] + 
+                                          "</br>AQI_NO2 : " + item['NO2'] + 
+                                          "</br>AQI_PM2.5 : " + item['PM2_5'] + 
+                                          "</br>temperature : " + item['temperature'] + 
+                                          "</br>datetime : " + item['datetime'] +
+                                          "</p>");
+                    infowindow.open(map, this);
+
+                    drawChart_clicked_marker(this.ssn);
+                  });
+                  setCircle(item,aqi_type);
+                }//end if
+
+              });// end for each
+
+            }else{
+              $.each(data,function(index, item){
+
+                if(index != 'result_code' && index != 'message'){
+                  var marker = new google.maps.Marker({
+                    map: map_setting,
+                    position: new google.maps.LatLng(item['latitude'], item['longitude']),
+                    title : item['ssn'],
+                    icon : image
+                  });
+
+                  var infowindow = new google.maps.InfoWindow();
+
+                  gmarker.push(marker);
+
+                  marker.addListener('click', function() {
+                    infowindow.setContent("<p>"+aqi_type+" : " + item[aqi_type] +
+                                          "</br>datetime : " + item['datetime'] +
+                                          "</p>");
+                    infowindow.open(map, this);
+                    drawChart_clicked_marker(this.title);
+                  });
+                  setCircle(item,aqi_type);
+                }//end if
+                
+              });
+            }//end else
+            
+          });//end done
+          
+        }//end setPin()
+        
+
+        $("button#aq_data").click(function(){
+          
+          switch (this.value){
+            case "CO":
+              setPin('CO');
+              break;
+
+            case "SO2":
+              setPin('SO2');
+              break;
+
+            case "O3":
+              setPin('O3');
+              break;
+
+            case "NO2":
+              setPin('NO2');
+              break;
+
+            case "PM2.5":
+              setPin('PM2_5');
+              break;
+
+            case "temperature":
+              setPin('temperature');
+              break;
+            
+            default :
+              setPin('all');
+
+            }//end switch
+
+          }); // end button events
+
+      function setCircle(item, aqi_type){
+        if(aqi_type == 'all'){
+          var circ = new google.maps.Circle({
+                    center: new google.maps.LatLng(item['latitude'], item['longitude']),
+                    clickable:false,
+                    fillColor: item['AQI_CO_COLOR'],
+                    fillOpacity:0.3, 
+                    map:map_setting,
+                    radius:1000,
+                    strokeColor: item['AQI_CO_COLOR'],
+                    strokeOpacity:0.3
+          });// end circle
+          gcircle.push(circ);
+        }else{
+          var circ = new google.maps.Circle({
+                    center: new google.maps.LatLng(item['latitude'], item['longitude']),
+                    clickable:false,
+                    fillColor: item['AQI_' + aqi_type + '_COLOR'],
+                    fillOpacity:0.3, 
+                    map:map_setting,
+                    radius:1000,
+                    strokeColor: item['AQI_' + aqi_type + '_COLOR'],
+                    strokeOpacity:0.3
+          });// end circle
+          gcircle.push(circ);
+        }
+        
+      } 
+         
+            
+    </script>
+
+    <!--Google Map API-->
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgrRKZjmZGHOCm2Ohq0PqnVoAJVR2u7Zg&callback=loadMap">
+    </script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="/js/sb-admin-2.min.js"></script>
+  <script src="/js/maplabel-compiled.js"></script>
+  <script src="/js/maplabel.js"></script>
+
+  <!-- Page level plugins -->
+  <script src="/vendor/chart.js/Chart.min.js"></script>
+
+  <!-- Page level custom scripts -->
+  <script src="/js/demo/chart-area-demo.js"></script>
+  <script src="/js/demo/chart-pie-demo.js"></script>
+
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+</body>
+
+</html>
