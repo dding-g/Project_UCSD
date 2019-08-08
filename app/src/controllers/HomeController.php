@@ -48,11 +48,28 @@ final class HomeController extends BaseController
         return $response->withJson(json_decode($json_data));
     }
 
-    //ANDROID AQ data return
-    public function android_aq_data_response(Request $request, Response $response, $args)
-    {
-        $usn_json = file_get_contents('php://input');
-        $usn_data = json_decode($usn_json, true);
+    //WEB AQ data return
+    public function web_realtime_aq_data_move_map_response(Request $request, Response $response, $args)
+    {   
+        $data = $request->getParsedBody();
 
+        $server_datetime = date("Y-m-d H:i:s");
+
+        $json_data = $this->sensor_db_model->aq_realtime_data_move_map($data['lat_min'], $data['lng_min'], $data['lat_max'], $data['lng_max'], date('Y-m-d H:i:s', strtotime("{$server_datetime} -1 days")) );
+
+        return $response->withJson(json_decode($json_data));
+    }
+
+
+    //ANDROID AQ data return
+    public function android_realtime_aq_data_move_map_response(Request $request, Response $response, $args)
+    {
+        $data_json = file_get_contents('php://input');
+        $data = json_decode($data_json, true);
+
+        $server_datetime = date("Y-m-d H:i:s");
+
+        return $this->sensor_db_model->aq_realtime_data_move_map($data['lat_min'], $data['lng_min'], 
+        $data['lat_max'], $data['lng_max'], date('Y-m-d H:i:s', strtotime("{$server_datetime} -1 days")) );    
     }
 }

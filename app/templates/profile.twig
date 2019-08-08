@@ -353,7 +353,8 @@
 
   <script>
     $('#sign_out_form').submit(function( event ) {
-      var posting = $.post( "/qi/user/sign-out/process", { usn: localStorage.getItem('usn') } );
+      var posting = $.post( "/qi/user/sign-out/process", { usn: localStorage.getItem('usn') }
+       );
 
       posting.done(function( data ) {
         localStorage.removeItem('email');

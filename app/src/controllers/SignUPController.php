@@ -72,7 +72,7 @@ final class SignUPController extends BaseController
         $email_address = $user_data['Email'];
 
         if($is_sign_up == 1){
-          $this->emailconfig->sendMail($user_data['Email'], $user_data['authorized_code']);
+          $this->emailconfig->sendMail($user_data['Email'], $user_data['authorized_code'], 'authorized_user');
           echo ("<script language=javascript> 
                   alert('Send Email complete!! Please check email !!');
                   location.href='http://teama-iot.calit2.net/';
@@ -110,7 +110,7 @@ final class SignUPController extends BaseController
       $is_sign_up = $this->db_model->addUser($user_data);
       
       if($is_sign_up == 1){
-        $this->emailconfig->sendMail($user_data['Email'], $user_data['authorized_code']);
+        $this->emailconfig->sendMail($user_data['Email'], $user_data['authorized_code'], 'authorized_user');
         $result_code = array('success'=>1, 'error'=>'none');
         return json_encode($result_code);
         

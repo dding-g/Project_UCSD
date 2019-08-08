@@ -78,7 +78,7 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">AirQuality Data</h6>
-            <a class="collapse-item" href="/qi/device/aq_data/historical">Historical Data</a>
+            <a class="collapse-item" href="buttons.html">Historical Data</a>
           </div>
         </div>
       </li>
@@ -230,6 +230,8 @@
         <!-- End of Topbar -->
 <div class="container-fluid">
   <div>
+    <div id = "device_list">
+    </div>
     <div>
       <button id = 'aq_data' class = 'btn' style = "background-color:#556b2f ; border:1px #556b2f solid;" value = "ALL">ALL</button>
       <button id = 'aq_data' class = 'btn' style = "background-color:#daa520 ; border:1px #daa520 solid;" value = "CO">CO</button>
@@ -240,6 +242,19 @@
     </div>
 
     <div id = "map" style = "width:640px; height:480px;"></div>
+    <div style = "width:640px; height:100px; text-align: center;">
+
+      <div>
+        <input type = "date" id = "date_start" onchange = "display_period()"> ~
+        <input type = "date" id = "date_end" onchange = "display_period()">
+        <button id = "aq_data_search">Search!</button>
+      </div>
+      
+      <div>
+        <label id = "lb_period"></label>
+      </div>
+
+    </div>
   </div>
 
 </div>
@@ -311,10 +326,50 @@
 
       });
     });
+
+    function display_period(){
+      $("#lb_period").html("Search Period : " + $("#date_start").val() + " ~ " + $("#date_end").val());
+    }
+
+    $("#aq_data_search").click(function(event){
+      setPin('all');
+    });
+
+    function drawChart_clicked_marker(clicked_ssn) {
+        var posting = $.post( "/qi/device/aq_data/historical/process",
+        {date_start : $("#date_start").val(), date_end : $('#date_end').val(), ssn : ssn});
+        
+        posting.done(function(data){
+          // parse the json data
+            var oobj = JSON.parse(jsonData);
+            
+            var s_array = ["s1", "s2", "s3", "s4", "s5", "s6"];
+            var title_array = ["O2 Chart", "NO2 Chart", "pm25 Chart", "S4 Chart", "S5 Chart", "S6 Chart"];
+
+            for (i=0; i<s_array.length; i++) {
+                // want to grab set of data for single sensor
+                var newData = JSON.stringify(oobj[s_array[i]][0]);
+
+                // Create our data table out of reduced json
+                var data = new google.visualization.DataTable(newData);
+
+                var options = {
+                    width: 800, height: 480,
+                    title: title_array[i],
+                    hAxis: {
+                        title: 'Sources', 
+                        slantedText: true
+                    }
+                };
+
+                var chart = new google.visualization.LineChart(document.getElementById('chart_div_' + s_array[i]));
+                chart.draw(data, options);
+            }
+        });
+    }
   </script>
 
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
   <script>
     $(document).ready(function(){
@@ -328,15 +383,12 @@
         $("#userDropdown").prop("enable", true);
         document.getElementById('email').innerHTML = email;
       }
-
+      
     });
 
       //Show Google Map When Start
     $( window ).load(function() {
-       var posting = $.post( "/qi/device/aq_data" );
-        posting.done( function (data) {
-          //For First one time process
-          loadMap(data[0]);
+          loadMap();
 
           // Display Marker when move Map
           map_setting.addListener('idle', function(){
@@ -347,9 +399,8 @@
 
               setPin('all');
           });//end listener
-          setPin('all');
 
-        });//end post first
+          setPin('all');
 
     });//end window.load
 
@@ -363,31 +414,36 @@
       function loadMap(aq_data_load) {  
           // Initialize Google Maps
           var mapOptions = {
-            center:new google.maps.LatLng(aq_data_load.latitude, aq_data_load.longitude),
+            center:new google.maps.LatLng(32.883002, -117.235040),
             zoom: 11,
           }
           map_setting = new google.maps.Map(document.getElementById("map"), mapOptions);
           gmarker = [];
           gcircle = [];
+
       }
 
         //get array AirQuality data
         function setPin(aqi_type){
             
-          var posting = $.post( "/qi/device/aq_data/move_map", 
-          { lat_min : sw.lat(), lng_min : sw.lng(), lat_max : ne.lat(), lng_max : ne.lng() , aqi_type : aqi_type} );
+          var posting = $.post( "/qi/device/aq_data/historical/process", 
+          { lat_min : sw.lat(), lng_min : sw.lng(), lat_max : ne.lat(), lng_max : ne.lng() ,
+            date_start : $('#date_start').val(),  date_end : $('#date_end').val(), usn : 19} );
               
           posting.done( function (data) {
 
             for(var i = 0 ; i < gmarker.length ; i ++){
-              if(gmarker[i].getMap() != null)
+              if(gmarker[i].getMap() != null){
                 gmarker[i].setMap(null);
+              }
               
             }
 
+
             for(var i = 0 ; i < gcircle.length ; i++){
-              if(gcircle[i].getMap() != null)
+              if(gcircle[i].getMap() != null){
                 gcircle[i].setMap(null);
+              }
             }
 
             if(aqi_type == 'all'){
@@ -397,7 +453,7 @@
                   var marker = new google.maps.Marker({
                     map: map_setting,
                     position: new google.maps.LatLng(item['latitude'], item['longitude']),
-                    title: item['usn']
+                    title: item['ssn']
                   });
 
                   var infowindow = new google.maps.InfoWindow();
@@ -414,6 +470,7 @@
                                           "</br>datetime : " + item['datetime'] +
                                           "</p>");
                     infowindow.open(map, this);
+                    //request ssn data
                   });
                   setCircle(item,aqi_type);
                 }//end if
@@ -427,7 +484,7 @@
                   var marker = new google.maps.Marker({
                     map: map_setting,
                     position: new google.maps.LatLng(item['latitude'], item['longitude']),
-                    title: item['usn']
+                    title: item['ssn']
                   });
 
                   var infowindow = new google.maps.InfoWindow();
@@ -516,11 +573,12 @@
             
     </script>
 
-  
     <!--Google Map API-->
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgrRKZjmZGHOCm2Ohq0PqnVoAJVR2u7Zg&callback=loadMap">
     </script>
+    
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
   <!-- Bootstrap core JavaScript-->
   <script src="/vendor/jquery/jquery.min.js"></script>

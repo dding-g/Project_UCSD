@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>KANGAROO SIGN-IN</title>
+  <title>ID CANCELLATION</title>
 
   <!-- Custom fonts for this template-->
   <link href="/vendor/fontawesome-free///css/all.min.css" rel="stylesheet" type="text/css">
@@ -33,37 +33,30 @@
           <div class="card-body p-0">
             <!-- Nested Row within Card Body -->
             <div class="row">
-            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+            <div class="col-lg-6 d-none d-lg-block bg-idcancel-image"></div>
               <div class="col-lg-6">
                 <div class="p-5">
                   <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">LET'S SIGN IN!</h1>
+                    <h1 class="h4 text-gray-900 mb-4">ID CANCELLATION</h1>
                   </div>
 
-                  <form class="user" action = "/qi/sign-in/process" id = "sign_in_form" method = "post">
+                  <form class="user" id = "id_cancel_form" onsubmit="return checkForm();">
                     <div class="form-group">
-                      <input type="email" class="form-control form-control-user" id = 'email' name = "email" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+
+                      <input type="password" class="form-control form-control-user" id = 'password' name="password" placeholder="Your Password">
+         
                     </div>
                     <div class="form-group">
-                      <input type="password" class="form-control form-control-user" id = 'password' name="password" placeholder="Password">
-                    </div>
-                    <div class="form-group">
-                      {# <div class="custom-control custom-checkbox small">
+                      <div class="custom-control custom-checkbox small">
                         <input type="checkbox" class="custom-control-input" id="customCheck">
                         <label class="custom-control-label" for="customCheck">Remember Me</label>
-                      </div> #}
+                      </div>
                     </div>
-                    <input type ="submit" class="btn btn-primary btn-user btn-block"  value = 'Login'>
-                    <hr>
-                    <a href="/qi/sign-up" class="btn btn-google btn-user btn-block">
-                      Create an Account!
-                    </a>
+                    <input type = "hidden" id = "usn" name = "usn">
+                    <input type ="submit" class="btn btn-primary btn-user btn-block"  value = 'ID CANCELLATION'>
+                    
                   </form>
 
-                  <hr>
-                  <div class="text-center">
-                    <a class="small" href="/qi/user/forgotten_password">Forgot Password?</a>
-                  </div>
                 </div>
               </div>
             </div>
@@ -79,27 +72,47 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
+
+                            {# #}
+
   <script>
-    $('#sign_in_form').submit(function( event ) {
-      var posting = $.post( "/qi/sign-in/process", { email: $("#email").val(), password: $("#password").val()} );
+    $('#id_cancel_form').submit(function( event ) {
+      var posting = $.post( "/qi/user/idCancellation/process" ,
+                             { password: $("#password").val() , usn : $("#usn").val() });
 
       posting.done(function( data ) {
         if(data.result_code == 1){
-          localStorage.setItem("email", data.email);
-          localStorage.setItem("usn", data.usn);
-          localStorage.setItem("firstname", data.firstname);
-          localStorage.setItem("lastname", data.lastname);
-          localStorage.setItem("nickname", data.nickname);
-
-          window.location.href = "http://teama-iot.calit2.net/";
+          localStorage.removeItem('usn');
+          localStorage.removeItem('email');
+          window.location.replace("http://teama-iot.calit2.net/");
+          alert('ID CANCELLATION Success! Thank you using our service');
+        }else if(data.result_code == 3){
+          window.location.replace("http://teama-iot.calit2.net/qi/user/idCancellation");
+          alert('ID CANCELLATION Fail! wrong password!');
         }else{
-          window.location.href = "http://teama-iot.calit2.net/qi/sign-in";
-          alert('Password or Email is wrong!');
+          alert('ID CANCELLATION Fail! unknown');
         }
-       
+
       });
 
     });
+  </script>
+
+
+  <script>
+      window.onload = function(){
+        if(typeof localStorage.getItem('usn') != 'undefined'){
+          $("#usn").val(localStorage.getItem('usn'));
+        }else{
+          alert('Can not found identification');
+          window.history.back();
+        }
+      }
+      
+      {# check form before send #}
+      function checkForm(){
+        return confirm("Are you sure about ID CANCELLATION?");  
+      }
   </script>
 
   <!-- Bootstrap core JavaScript-->
