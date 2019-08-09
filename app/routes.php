@@ -83,8 +83,6 @@ $app->get('/qi/authorized_user_fp/{verification_code_cpw}', 'App\Controller\Forg
 
 
 // ==============SensorManagement=================
-
-
 $app->post('/qi/device/hr_record', 'App\Controller\SensorManagement:heart_rate_record')
     ->setName('heart_rate_record');
 
@@ -102,8 +100,6 @@ $app->post('/qi/device/list_view', 'App\Controller\SensorManagement:web_device_l
 
 $app->post('/android/device/list_view', 'App\Controller\SensorManagement:android_device_list_view_process')
     ->setName('android_device_list_view_process');
-
-
 //======================================
 
 
@@ -158,4 +154,7 @@ $app->post('/qi/device/aq_data/historical/chartdata/process', 'App\Controller\Ch
 //================Heart Rate=================
 $app->get('/qi/device/heart_rate', 'App\Controller\SensorManagement:heart_rate_view')
     ->setName('heart_rate_view');
+
+$app->post('/qi/device/heart_rate/realtime', 'App\Controller\SensorManagement:web_heart_rate_realtime_data_process')
+    ->setName('web_heart_rate_realtime_data');
 //===========================================

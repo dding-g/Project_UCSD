@@ -123,10 +123,18 @@ final class SensorManagement extends BaseController
     return $response;
   }
 
-  //view Air quality historical data page
+  //view heart_rate_view page
   public function heart_rate_view(Request $request, Response $response, $args)  {
     $this->view->render($response, 'hr_data_view.twig');
     return $response;
+  }
+
+  //real time heart rate data
+  public function web_heart_rate_realtime_data_process(Request $request, Response $response, $args)  {
+    $hr_data = $request->getParsedBody();
+    $result_code = $this->sensor_db_model->get_realtime_hr_data($hr_data['usn']);
+
+    return $response->withJson(json_decode($result_code));
   }
 
 
