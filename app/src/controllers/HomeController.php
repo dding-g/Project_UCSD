@@ -56,8 +56,7 @@ final class HomeController extends BaseController
         $server_datetime = date("Y-m-d H:i:s");
 
         $json_data = $this->sensor_db_model->aq_realtime_data_move_map($data['lat_min'], $data['lng_min'], $data['lat_max'], $data['lng_max'], 
-                                                                        date('Y-m-d H:i:s', strtotime("{$server_datetime} -1 days")),
-                                                                        $data['usn'],$data['ssn'] );
+                                                                        date('Y-m-d H:i:s', strtotime("{$server_datetime} -1 days")));
 
         return $response->withJson(json_decode($json_data));
     }
@@ -71,7 +70,7 @@ final class HomeController extends BaseController
 
         $server_datetime = date("Y-m-d H:i:s");
 
-        return $this->sensor_db_model->aq_realtime_data_move_map($data['lat_min'], $data['lng_min'], 
-        $data['lat_max'], $data['lng_max'], date('Y-m-d H:i:s', strtotime("{$server_datetime} -1 days")) );    
+        return $this->sensor_db_model->aq_realtime_data_move_map($data['lat_min'], $data['lng_min'], $data['lat_max'], $data['lng_max'], 
+                                                                    date('Y-m-d H:i:s', strtotime("{$server_datetime} -1 days")) );    
     }
 }

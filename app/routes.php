@@ -149,6 +149,9 @@ $app->get('/qi/device/aq_data/historical', 'App\Controller\SensorManagement:aq_h
 $app->post('/qi/android/aq_data/historical/process', 'App\Controller\SensorManagement:mobile_get_historical_aq_data')
     ->setName('mobile_get_historical_aq_data');
 
+$app->post('/qi/android/aq_data/historical/chartdata/process', 'App\Controller\ChartsController:android_historical_aq_chart_data')
+    ->setName('android_historical_aq_chart_data');
+
 $app->post('/qi/device/aq_data/historical/chartdata/process', 'App\Controller\ChartsController:web_historical_aq_chart_data')
     ->setName('web_historical_aq_chart_data');
 //===========================================

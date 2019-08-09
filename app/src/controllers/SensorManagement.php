@@ -83,7 +83,7 @@ final class SensorManagement extends BaseController
   public function mobile_get_historical_aq_data(Request $request, Response $response, $args)
   {
     $aq_data_json = file_get_contents('php://input');
-    $ap_data = json_decode($ap_data_json, true);
+    $aq_data = json_decode($aq_data_json, true);
 
     return $this->sensor_db_model->get_historical_aq_data_using_userdata($aq_data['date_start'], $aq_data['date_end'], $aq_data['usn'], $aq_data['ssn']);
   }

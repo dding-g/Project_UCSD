@@ -9,6 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>KANGAROO HOME</title>
 
@@ -19,6 +20,51 @@
   <!-- Custom styles for this template-->
   <link href="/css/sb-admin-2.min.css" rel="stylesheet">
   <style>
+  /* width */
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #deb887 ; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #b30000; 
+}
+
+  .swing {
+    perspective: 100px;
+  }
+
+  .slide-fade li {
+    transition: all 0.4s ease-out;
+    opacity: 0;
+  }
+  .slide-fade li.show {
+    opacity: 1;
+  }
+  .swing li {
+    opacity: 0;
+    transform: rotateX(-90deg);
+    transition: all 0.5s cubic-bezier(.36,-0.64,.34,1.76);
+  }
+
+  .swing li.show {
+    opacity: 1;
+    transform: none;
+    transition: all 0.5s cubic-bezier(.36,-0.64,.34,1.76);
+  }
+  
   #button_device_list {
   display: inline-block;
   border-radius: 4px;
@@ -28,10 +74,11 @@
   text-align: center;
   font-size: 14px;
   padding: 20px;
-  width: 100px;
+  width: 150px;
   transition: all 0.5s;
   cursor: pointer;
   margin: 5px;
+  
 }
 
 #button_device_list span {
@@ -161,7 +208,7 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">AirQuality Data</h6>
-            <a class="collapse-item" href="buttons.html">Historical Data</a>
+            <a class="collapse-item" href="/qi/device/aq_data/historical">Historical Data</a>
           </div>
         </div>
       </li>
@@ -170,15 +217,13 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
           <i class="fas fa-fw fa-wrench"></i>
-          <span>Utilities</span>
+          <span>Heart Rate</span>
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Custom Utilities:</h6>
-            <a class="collapse-item" href="utilities-color.html">Colors</a>
-            <a class="collapse-item" href="utilities-border.html">Borders</a>
-            <a class="collapse-item" href="utilities-animation.html">Animations</a>
-            <a class="collapse-item" href="utilities-other.html">Other</a>
+            <h6 class="collapse-header">Heart Rate</h6>
+            <a class="collapse-item" href="/qi/device/heart_rate/realtime">Heart Rate Realtime</a>
+            <a class="collapse-item" href="/qi/device/heart_rate/historical">Heart Rate Historical</a>
           </div>
         </div>
       </li>
@@ -302,21 +347,131 @@
         </nav>
         <!-- End of Topbar -->
 <div class="container-fluid">
+  <p id = "lb_search_txt" style = "font-size : 25pt">What do you want to find?</p>
+  <div style = "text-align: center;">
+    <div style ="height:480px; display: inline-block; float : left ;border-style: solid; padding:30px; margin : 10px;">
+    <p style = "color:#888888; font-size : 15pt; text-align:left">Datetime</p>
+    <hr>
 
-    <div>
-      <button id = 'aq_data' class = 'btn' style = "background-color:#556b2f ; border:1px #556b2f solid;" value = "ALL">ALL</button>
-      <button id = 'aq_data' class = 'btn' style = "background-color:#daa520 ; border:1px #daa520 solid;" value = "CO">CO</button>
-      <button id = 'aq_data' class = 'btn' style = "background-color:#bdb76b ; border:1px #bdb76b solid;" value = "SO2">SO2</button>
-      <button id = 'aq_data' class = 'btn' style = "background-color:#6b8e23 ; border:1px #6b8e23 solid;" value = "O3">O3</button>
-      <button id = 'aq_data' class = 'btn' style = "background-color:#808000 ; border:1px #808000 solid;" value = "NO2">NO2</button>
-      <button id = 'aq_data' class = 'btn' style = "background-color:#008000 ; border:1px #008000 solid;" value = "PM2.5">PM2.5</button>
+      <div style = 'margin: auto; vertical-align:middle;'>
+        <input type = "text" id = "date_start" onchange = "change_lb_aqi_data_text()"> 
+        <p style = "font-size:30pt"> ~ </p>
+        <input type = "text" id = "date_end" onchange = "change_lb_aqi_data_text()">
+      </div>
+
+    </div>
+    
+    <div style ="height:480px; display: inline-block; float : left ;border-style: solid; padding:30px; margin : 10px; overflow-y:scroll;">
+      <p style = "color:#888888; font-size : 15pt; text-align:left">Device List</p>
+      <hr> 
+
+      <ul id="list" style = "list-style:none; padding-left:0px;">
+      </ul>
     </div>
 
-  <div style = "text-align: center;">
-    <div id = "device_list"  style = "display: inline-block;margin: auto;"></div>
-    <div id = "map" style = "display: inline-block; width:640px; height:480px;margin: auto;"></div>
+    <div style ="height:480px; display: inline-block; float : left ;border-style: solid; padding:30px; margin : 10px; overflow-y:scroll;">
+      <p style = "color:#888888; font-size : 15pt; text-align:left">AQI type</p>
+      <hr>
+     
+      <ul style = "list-style:none; padding-left:0px;">
+        <li>
+          <button class = 'aq_data' style = "width:80px; 
+                                              height:40px; 
+                                              border:1px #3399dd solid; 
+                                              margin:15px auto; 
+                                              background-color:#66aaff; 
+                                              text-align:center; 
+                                              cursor: pointer; 
+                                              color:#FFFFFF; 
+                                              transition:all 0.9s; 
+                                              color 0.3;  background-color:#556b2f ; border:1px #556b2f solid;" value = "ALL">ALL</button>
+        </li>
 
-    <div style ="display: inline-block; width:810px; height:480px; overflow:scroll;margin: auto;">
+        <li>
+          <button class = 'aq_data' style = "width:80px; 
+                                              height:40px; 
+                                              border:1px #3399dd solid; 
+                                              margin:15px auto; 
+                                              background-color:#66aaff; 
+                                              text-align:center; 
+                                              cursor: pointer; 
+                                              color:#FFFFFF; 
+                                              transition:all 0.9s; 
+                                              color 0.3; background-color:#daa520 ; border:1px #daa520 solid;" value = "CO">CO</button>
+        </li>
+
+        <li>
+          <button class = 'aq_data' style = "width:80px; 
+                                              height:40px; 
+                                              border:1px #3399dd solid; 
+                                              margin:15px auto; 
+                                              background-color:#66aaff; 
+                                              text-align:center; 
+                                              cursor: pointer; 
+                                              color:#FFFFFF; 
+                                              transition:all 0.9s; 
+                                              color 0.3; background-color:#bdb76b ; border:1px #bdb76b solid;" value = "SO2">SO2</button>
+        </li>
+
+        <li>
+          <button class = 'aq_data' style = "width:80px; 
+                                              height:40px; 
+                                              border:1px #3399dd solid; 
+                                              margin:15px auto; 
+                                              background-color:#66aaff; 
+                                              text-align:center; 
+                                              cursor: pointer; 
+                                              color:#FFFFFF; 
+                                              transition:all 0.9s; 
+                                              color 0.3; background-color:#6b8e23 ; border:1px #6b8e23 solid;" value = "O3">O3</button>
+        </li>
+
+        <li>
+          <button class = 'aq_data' style = "width:80px; 
+                                            height:40px; 
+                                            border:1px #3399dd solid; 
+                                            margin:15px auto; 
+                                            background-color:#66aaff; 
+                                            text-align:center; 
+                                            cursor: pointer; 
+                                            color:#FFFFFF; 
+                                            transition:all 0.9s; 
+                                            color 0.3; background-color:#808000 ; border:1px #808000 solid;" value = "NO2">NO2</button>
+        </li>
+
+        <li>
+          <button class = 'aq_data' style = "width:80px; 
+                                              height:40px; 
+                                              border:1px #3399dd solid; 
+                                              margin:15px auto; 
+                                              background-color:#66aaff; 
+                                              text-align:center; 
+                                              cursor: pointer; 
+                                              color:#FFFFFF; 
+                                              transition:all 0.9; 
+                                              color 0.3; background-color:#008000 ; border:1px #008000 solid;" value = "PM2.5">PM2.5</button>
+        </li>
+
+        <li>
+          <button class = 'aq_data' style = "width:120px; 
+                                              height:40px; 
+                                              border:1px #3399dd solid; 
+                                              margin:15px auto; 
+                                              background-color:#66aaff; 
+                                              text-align:center; 
+                                              cursor: pointer; 
+                                              color:#FFFFFF; 
+                                              transition:all 0.9s; 
+                                              color 0.3; background-color:#008000 ; border:1px #008000 solid;" value = "temperature">Temperature</button>
+        </li>
+      </ul>
+    </div>
+
+
+    <div style ="display: inline-block; width:810px; height:480px; overflow-y:scroll;margin: auto; border-style: solid; padding:30px; margin : 10px;">
+      <p style = "color:#888888; font-size : 15pt; text-align:left">Chart</p>
+      <hr>
+
       <div id="chart_div_CO"></div>
       <div id="chart_div_SO2"></div>
       <div id="chart_div_O3"></div>
@@ -325,19 +480,12 @@
       <div id="chart_div_temperature"></div>
     </div>
 
-    <div style = "width:640px; height:100px; text-align: center;margin: auto;">
-
-      <div style = 'margin: auto'>
-        <input type = "text" id = "date_start"> ~
-        <input type = "text" id = "date_end">
-        <button id = "aq_data_search" class = "btn btn-primary btn-user btn-block">Search!</button>
-      </div>
-      
-    </div>
 
   </div>
-
-
+  <div>
+   <button id = "button_device_list" class = "aq_data_search" style = "background-color: #1e90ff ">Search!</button>
+  </div>
+  <hr>
 
 </div>
 
@@ -408,7 +556,7 @@
     });
 
 
- 
+
       
   </script>
 
@@ -418,6 +566,10 @@
     $(document).ready(function(){
       var email = localStorage.getItem('email');
       var usn = localStorage.getItem('usn');
+      chart_drawed = [];
+      device_name_arr = [];
+      s_array =[];
+      print_aqi_type = "";
 
       if(usn == null){
         document.getElementById('email').innerHTML = "<Button class='btn btn-primary btn-user btn-block' onclick = 'sign_in_btn_click()'>SIGN IN</Button>";
@@ -438,22 +590,30 @@
       posting.done(function(data){
         $.each(data, function(index, item){
           if($.isNumeric(index)){
-            $("#device_list").append("<div><button class = 'btn_device_list' id = 'button_device_list' value = " + item['ssn'] +"><span>" + item['device_name'] + "</span></button></div>");
+            var list = document.getElementById('list');
+            var newLI = document.createElement('li');
+            newLI.setAttribute("class", "show")
+            newLI.innerHTML = "<button  id = 'button_device_list' class = 'btn_device_list' value = " + item['ssn'] +"><span>" + item['device_name'] + "</span></button>";
+            
+            device_name_arr[item['ssn']] = item['device_name'];
+
+            list.appendChild(newLI);
           }
         });
       });
-
+      
       
     });
 
       //Show Google Map When Start
     $( window ).load(function() {
-      $( ".btn_device_list" ).click(function(){
-          localStorage.setItem("clicked_ssn", this.value);
-
+      $( ".btn_device_list" ).click(function(event){
+          localStorage.setItem("clicked_ssn", $(this).val());
+          $("#lb_search_txt").html( "I want to find " + print_aqi_type + " data between " + $("#date_start").val() + " ~ " + $('#date_end').val() + 
+                                    " from " + device_name_arr[localStorage.getItem('clicked_ssn')] );
       });
-    google.load("visualization", "1", {packages:["corechart"]});
-    
+     google.load("visualization", "1", {packages:["corechart"]});
+
     function drawChart(clicked_ssn) {
         var posting = $.post( "/qi/device/aq_data/historical/chartdata/process",
         {date_start : $("#date_start").val(), date_end : $('#date_end').val(), usn : localStorage.getItem('usn'), ssn : clicked_ssn});
@@ -462,8 +622,19 @@
           // parse the json data
             var oobj = data;
 
-            var s_array = ["CO", "SO2", "O3", "NO2", "PM2_5", "temperature"];
-            var title_array = ["CO Chart", "SO2 Chart", "O3 Chart", "NO2 Chart", "PM2.5 Chart", "temperature Chart"];
+            var title_array = {
+              "CO" : "CO Chart",
+              "SO2" : "SO2 Chart",
+              "O3" : "O3 Chart",
+              "NO2" : "NO2 Chart",
+              "PM2_5" : "PM2.5 Chart",
+              "temperature" : "Temperature Chart",
+              };
+
+            for(i = 0 ; i < chart_drawed.length ; i ++){
+              chart_drawed[i].remove();
+            }
+            chart_drawed = [];
 
             for (i=0; i<s_array.length; i++) {
                 // want to grab set of data for single sensor
@@ -474,29 +645,80 @@
 
                 var options = {
                     width: 800, height: 480,
-                    title: title_array[i],
+                    title: title_array[s_array[i]],
                     hAxis: {
                         title: 'Sources', 
                         slantedText: true
                     }
                 };
 
+
                 var chart = new google.visualization.LineChart(document.getElementById('chart_div_' + s_array[i]));
+                chart_drawed[i] = 'chart_div_' + s_array[i];
                 chart.draw(data, options);
             }
         });
       }
           
-      $("#aq_data_search").click(function(event){
+      $(".aq_data_search").click(function(event){
         drawChart(37);
       });
+
+      $(".aq_data").click(function(){
+        switch(this.value){
+          case "ALL":
+          s_array = ["CO", "SO2", "O3", "NO2", "PM2_5", "temperature"];
+          print_aqi_type = "ALL"; 
+          break;
+
+          case "CO":
+          s_array = ["CO"];
+          print_aqi_type = "CO"; 
+          break;
+
+          case "SO2":
+          s_array = ["SO2"];
+          print_aqi_type = "SO2"; 
+          break;
+
+          case "O3":
+          s_array = ["O3"];
+          print_aqi_type = "O3"; 
+          break;
+
+          case "NO2":
+          s_array = ["NO2"];
+          print_aqi_type = "NO2"; 
+          break;
+
+          case "PM2.5":
+          s_array = ["PM2_5"];
+          print_aqi_type = "PM2.5"; 
+          break;
+
+          case "temperature":
+          s_array = ["temperature"];
+          print_aqi_type = "temperature"; 
+          break;
+
+          default:
+          break;
+        }
+        $("#lb_search_txt").html( "I want to find " + print_aqi_type + " data between " + $("#date_start").val() + " ~ " + $('#date_end').val() + 
+                                    " from " + device_name_arr[localStorage.getItem('clicked_ssn')] );
+      });
+
+
     });//end window.load
 
     function sign_in_btn_click(){
       window.location.href = "/qi/sign-in";
     }
 
-    
+    function change_lb_aqi_data_text(){
+      $("#lb_search_txt").html( "I want to find " + print_aqi_type + " data between " + $("#date_start").val() + " ~ " + $('#date_end').val() + 
+                                    " from " + device_name_arr[localStorage.getItem('clicked_ssn')] );
+    }
   </script>
     
 

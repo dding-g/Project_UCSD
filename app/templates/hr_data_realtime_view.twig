@@ -129,7 +129,7 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">AirQuality Data</h6>
-            <a class="collapse-item" href="buttons.html">Historical Data</a>
+            <a class="collapse-item" href="/qi/device/aq_data/historical">Historical Data</a>
           </div>
         </div>
       </li>
@@ -138,15 +138,13 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
           <i class="fas fa-fw fa-wrench"></i>
-          <span>Utilities</span>a
+          <span>Heart Rate</span>
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Custom Utilities:</h6>
-            <a class="collapse-item" href="utilities-color.html">Colors</a>
-            <a class="collapse-item" href="utilities-border.html">Borders</a>
-            <a class="collapse-item" href="utilities-animation.html">Animations</a>
-            <a class="collapse-item" href="utilities-other.html">Other</a>
+            <h6 class="collapse-header">Heart Rate</h6>
+            <a class="collapse-item" href="/qi/device/heart_rate/realtime">Heart Rate Realtime</a>
+            <a class="collapse-item" href="/qi/device/heart_rate/historical">Heart Rate Historical</a>
           </div>
         </div>
       </li>
@@ -310,18 +308,8 @@
 </hr>
   <div style = "text-align: center;">
 
-    <div style ="display: inline-block; width:810px; height:480px; margin: auto;">
+    <div style ="display: inline-block; margin: auto;">
       <div id="chart_div_realtime_heart"></div>
-    </div>
-
-    <div style = "width:640px; height:100px; text-align: center;margin: auto;">
-
-      <div style = 'margin: auto'>
-        <input type = "text" id = "date_start" onchange = "display_period_start()"> ~
-        <input type = "text" id = "date_end" onchange = "display_period_end()">
-        <button id = "aq_data_search" class = "btn btn-primary btn-user btn-block">Search!</button>
-      </div>
-      
     </div>
 
   </div>
