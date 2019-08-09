@@ -185,12 +185,12 @@ final class ChartsController extends BaseController
 
 
 
-  public function get_historical_aq_chart_data(Request $request, Response $response, $args) {
+  public function web_historical_aq_chart_data(Request $request, Response $response, $args) {
         try {
             $user_data  = $request->getParsedBody();
 
-            $chartdata = json_decode($this->sensor_db_model->get_historical_data_using_ssn_datetime($user_data['ssn'],
-                                        $user_data['date_start'],$user_data['date_end']) , true);
+            $chartdata = json_decode($this->sensor_db_model->get_historical_aq_data($user_data['date_start'],$user_data['date_end'], 
+                                                                                    $user_data['usn'], $user_data['ssn']), true);
             
 
             if ($chartdata['result_code'] == 1) {

@@ -143,11 +143,14 @@ $app->post('/qi/device/aq_record', 'App\Controller\SensorManagement:airQuality_r
 $app->get('/qi/device/aq_data/historical', 'App\Controller\SensorManagement:aq_historical_view')
     ->setName('aq_historical_view');
 
-$app->post('/qi/device/aq_data/historical/process', 'App\Controller\SensorManagement:web_get_historical_aq_data')
-    ->setName('web_get_historical_aq_data');
+// $app->post('/qi/device/aq_data/historical/process', 'App\Controller\SensorManagement:web_historical_aq_chart_data')
+//     ->setName('web_historical_aq_chart_data');
 
-$app->post('/qi/device/aq_data/historical/chartdata/process', 'App\Controller\ChartsController:get_historical_aq_chart_data')
-    ->setName('get_historical_aq_chart_data');
+$app->post('/qi/android/aq_data/historical/process', 'App\Controller\SensorManagement:mobile_get_historical_aq_data')
+    ->setName('mobile_get_historical_aq_data');
+
+$app->post('/qi/device/aq_data/historical/chartdata/process', 'App\Controller\ChartsController:web_historical_aq_chart_data')
+    ->setName('web_historical_aq_chart_data');
 //===========================================
 
 

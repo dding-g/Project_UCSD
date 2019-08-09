@@ -70,31 +70,11 @@ final class SensorManagement extends BaseController
     return $response->withjson(json_decode( $this->sensor_db_model->get_deviceList_usn($usn['usn'] )));
   }
 
-  //WEB : get historical aq data
-  public function web_get_historical_aq_data(Request $request, Response $response, $args)
-  {
-    $aq_data = $request->getParsedBody();
-    $result_code = $this->sensor_db_model->get_historical_data($aq_data['lat_min'], $aq_data['lng_min'], $aq_data['lat_max'],
-                                                                  $aq_data['lng_max'], $aq_data['date_start'], $aq_data['date_end'], $aq_data['usn'], $aq_data['ssn']);
-
-    return $response->withJson(json_decode($result_code));
-  }
-
   //WEB : get historical aq data using ssn AND datetime
   public function web_get_historical_aq_chart_data(Request $request, Response $response, $args)
   {
     $aq_data = $request->getParsedBody();
-    $result_code = $this->sensor_db_model->get_historical_data_using_ssn_datetime($aq_data['ssn'], $aq_data['date_start'], $aq_data['date_end']);
-
-    return $response->withJson(json_decode($result_code));
-  }
-
-
-  //WEB : get historical hr data
-  public function web_get_historical_hr_data(Request $request, Response $response, $args)
-  {
-    $hr_data = $request->getParsedBody();
-    $result_code = $this->sensor_db_model->get_historical_aq_data($hr_data['usn']);
+    $result_code = $this->sensor_db_model->get_historical_aq_data_using_userdata($aq_data['date_start'], $aq_data['date_end'], $aq_data['usn'], $aq_data['ssn']);
 
     return $response->withJson(json_decode($result_code));
   }
@@ -105,7 +85,7 @@ final class SensorManagement extends BaseController
     $aq_data_json = file_get_contents('php://input');
     $ap_data = json_decode($ap_data_json, true);
 
-    return $this->sensor_db_model->get_historical_aq_data($aq_data['usn'],$aq_data['ssn']);
+    return $this->sensor_db_model->get_historical_aq_data_using_userdata($aq_data['date_start'], $aq_data['date_end'], $aq_data['usn'], $aq_data['ssn']);
   }
 
   //Android : get historical hr data
