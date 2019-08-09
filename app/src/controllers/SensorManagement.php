@@ -123,9 +123,15 @@ final class SensorManagement extends BaseController
     return $response;
   }
 
-  //view heart_rate_view page
-  public function heart_rate_view(Request $request, Response $response, $args)  {
-    $this->view->render($response, 'hr_data_view.twig');
+  //view heart_rate_realtime_view page
+  public function heart_rate_realtime_view(Request $request, Response $response, $args)  {
+    $this->view->render($response, 'hr_data_realtime_view.twig');
+    return $response;
+  }
+
+    //view heart_rate_historical_view page
+  public function heart_rate_historical_view(Request $request, Response $response, $args)  {
+    $this->view->render($response, 'hr_data_historical_view.twig');
     return $response;
   }
 

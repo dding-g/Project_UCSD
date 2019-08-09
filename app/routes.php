@@ -152,9 +152,15 @@ $app->post('/qi/device/aq_data/historical/chartdata/process', 'App\Controller\Ch
 
 
 //================Heart Rate=================
-$app->get('/qi/device/heart_rate', 'App\Controller\SensorManagement:heart_rate_view')
-    ->setName('heart_rate_view');
+$app->get('/qi/device/heart_rate/realtime', 'App\Controller\SensorManagement:heart_rate_realtime_view')
+    ->setName('heart_rate_realtime_view');
 
-$app->post('/qi/device/heart_rate/realtime', 'App\Controller\SensorManagement:web_heart_rate_realtime_data_process')
+$app->get('/qi/device/heart_rate/historical', 'App\Controller\SensorManagement:heart_rate_historical_view')
+    ->setName('heart_rate_historical_view');
+
+$app->post('/qi/device/heart_rate/realtime/process', 'App\Controller\SensorManagement:web_heart_rate_realtime_data_process')
+    ->setName('web_heart_rate_realtime_data');
+
+$app->post('/qi/device/heart_rate/historical/process', 'App\Controller\SensorManagement:web_heart_rate_realtime_data_process')
     ->setName('web_heart_rate_realtime_data');
 //===========================================
