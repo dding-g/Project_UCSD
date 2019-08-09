@@ -161,6 +161,6 @@ $app->get('/qi/device/heart_rate/historical', 'App\Controller\SensorManagement:h
 $app->post('/qi/device/heart_rate/realtime/process', 'App\Controller\SensorManagement:web_heart_rate_realtime_data_process')
     ->setName('web_heart_rate_realtime_data');
 
-$app->post('/qi/device/heart_rate/historical/process', 'App\Controller\SensorManagement:web_heart_rate_realtime_data_process')
-    ->setName('web_heart_rate_realtime_data');
+$app->post('/qi/device/heart_rate/historical/process', 'App\Controller\SensorManagement:web_heart_rate_historical_data_process')
+    ->setName('web_heart_rate_historical_data_process');
 //===========================================

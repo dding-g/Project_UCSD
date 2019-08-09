@@ -537,7 +537,8 @@
               range: XAXISRANGE
             },
             yaxis: {
-              max: 255
+              max: 150,
+              min: 70
             },
             legend: {
               show: false
@@ -556,7 +557,7 @@
     intervals () {
       window.setInterval(() => {
         
-        var posting = $.post( "/qi/device/heart_rate/realtime", { usn: 19 } );
+        var posting = $.post( "/qi/device/heart_rate/realtime/process", { usn: 19 } );
         
         posting.done(function(heart_data){
           getNewSeries(new Date().getTime(), heart_data.heart_rate)

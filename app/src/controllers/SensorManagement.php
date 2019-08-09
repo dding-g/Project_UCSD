@@ -75,7 +75,7 @@ final class SensorManagement extends BaseController
   {
     $aq_data = $request->getParsedBody();
     $result_code = $this->sensor_db_model->get_historical_data($aq_data['lat_min'], $aq_data['lng_min'], $aq_data['lat_max'],
-                                                                  $aq_data['lng_max'], $aq_data['date_start'], $aq_data['date_end'], $aq_data['usn']);
+                                                                  $aq_data['lng_max'], $aq_data['date_start'], $aq_data['date_end'], $aq_data['usn'], $aq_data['ssn']);
 
     return $response->withJson(json_decode($result_code));
   }
@@ -143,5 +143,25 @@ final class SensorManagement extends BaseController
     return $response->withJson(json_decode($result_code));
   }
 
+  //historical heart rate data
+  public function web_heart_rate_historical_data_process(Request $request, Response $response, $args)  {
+    $hr_data = $request->getParsedBody();
+    $result = json_decode($this->sensor_db_model->get_historical_hr_data($hr_data), true);
+
+      // loop thru the sensor data and build sensor_array
+      foreach ($result as $row) {
+          if(is_array($row)){
+              $heart_rate_data = array(
+                                    'date'=>$row['datetime'],
+                                    'value'=>$row['heart_rate']
+                                  );
+          
+              // add current sensor_array line to $rows
+              $rows[] = $heart_rate_data;
+          }
+      }
+  
+    return $response->withJson($rows);
+  }
 
 }

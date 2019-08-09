@@ -92,7 +92,8 @@
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Heart Rate</h6>
-            <a class="collapse-item" href="/qi/device/heart_rate">Heart Rate Information</a>
+            <a class="collapse-item" href="/qi/device/heart_rate/realtime">Heart Rate Realtime</a>
+            <a class="collapse-item" href="/qi/device/heart_rate/historical">Heart Rate Historical</a>
           </div>
         </div>
       </li>
@@ -372,7 +373,7 @@
         function setPin(aqi_type){
             
           var posting = $.post( "/qi/device/aq_data/move_map", 
-          { lat_min : sw.lat(), lng_min : sw.lng(), lat_max : ne.lat(), lng_max : ne.lng() , aqi_type : aqi_type} );
+          { lat_min : sw.lat(), lng_min : sw.lng(), lat_max : ne.lat(), lng_max : ne.lng() , aqi_type : aqi_type, usn : -1, ssn : -1} );
               
           posting.done( function (data) {
 

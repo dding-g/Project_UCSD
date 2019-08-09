@@ -21,12 +21,13 @@
   <link href="/assets/styles.css" rel="stylesheet" />
 
 
+</style>
   <style>
-  #chart {
-    max-width: 650px;
-    margin: 35px auto;
-  }
 
+  #chartdiv {
+    width: 100%;
+    height: 500px;
+  }
   .btn { 
     width:80px; 
     height:40px; 
@@ -287,7 +288,7 @@
 <div class="container-fluid">
 
     <div>
-      <p style="font-weight:bold ; font-size:20pt; ">Heart Rate Realtime</p>
+      <p style="font-weight:bold ; font-size:20pt; ">Heart Rate Historical</p>
 
       <div>
         <p  style="font-weight:bold ; font-size:32pt">
@@ -299,32 +300,23 @@
         </p>
       </div>
 
-      <div id="app"></div>
 
-      <div id="html">
-              &lt;div id=&quot;chart&quot;&gt;&#10;          &lt;ReactApexChart options={this.state.options} series={this.state.series} type=&quot;line&quot; height=&quot;350&quot; /&gt;&#10;        &lt;/div&gt;
-      </div>
-
-
-    </div>
-</hr>
+      <div id="chartdiv"></div>
   <div style = "text-align: center;">
 
-    <div style ="display: inline-block; width:810px; height:480px; margin: auto;">
-      <div id="chart_div_realtime_heart"></div>
-    </div>
-
     <div style = "width:640px; height:100px; text-align: center;margin: auto;">
-
-      <div style = 'margin: auto'>
-        <input type = "text" id = "date_start" onchange = "display_period_start()"> ~
-        <input type = "text" id = "date_end" onchange = "display_period_end()">
-        <button id = "aq_data_search" class = "btn btn-primary btn-user btn-block">Search!</button>
+      <div style = 'margin: auto'>  
+        <input type = "text" id = "date_start"> ~
+        <input type = "text" id = "date_end">
+        <button id = "btn_heart_rate_historical_search" class = "btn btn-primary btn-user btn-block">Search!</button>
       </div>
       
     </div>
 
   </div>
+    </div>
+</hr>
+
 
 
 
@@ -420,175 +412,138 @@
       });
     });
 
-      //Show Google Map When Start
-    $( window ).load(function() {
-          setInterval(function() {
-          // Do something every 2 seconds
-            var posting = $.post("/qi/device/heart_rate/realtime", {usn : 19});
-
-            posting.done(function(data){
-              if(data.result_code == 1){
-                $("#heart_rate_date").html(data.datetime);
-                $("#heart_rate_ratio").html(data.heart_rate);
-              }
-            });
-          }, 1000);
-    });//end window.load
-
     function sign_in_btn_click(){
       window.location.href = "/qi/sign-in";
     }
   </script>
 
 
-  {# Real time heart rate Chart #}
-  <script type="text/babel">
+<!-- Resources -->
+<script src="https://www.amcharts.com/lib/4/core.js"></script>
+<script src="https://www.amcharts.com/lib/4/charts.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
 
-    var lastDate = 0;
-    var data = []
-    var TICKINTERVAL = 1000 // 단위 ms
-    {# var TICKINTERVAL = 1000 #}
-    let XAXISRANGE = 9000 
-    {# let XAXISRANGE = 9000 #}
+  <!-- Chart code -->
+  <script>
+    am4core.ready(function() {
+    // Themes begin
+    am4core.useTheme(am4themes_animated);
+    // Themes end
+    // Create chart instance
+    chart = am4core.create("chartdiv", am4charts.XYChart);
+    chart.dateFormatter.inputDateFormat = "yyyy-MM-dd";
+        chart.data = data;
+        // Create axes
+        var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+        var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 
-    {# function getDayWiseTimeSeries(baseval, count, yrange) {
-        var i = 0;
-        while (i < count) {
-            var x = baseval;
-            var y = Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
+        // Create series
+        var series = chart.series.push(new am4charts.LineSeries());
+        series.dataFields.valueY = "value";
+        series.dataFields.dateX = "date";
+        series.tooltipText = "{value}"
+        series.strokeWidth = 2;
+        series.minBulletDistance = 15;
 
-            data.push({
-                x, y
-            });
-            lastDate = baseval
-            baseval += TICKINTERVAL;
-            i++;
-        }
-    }
+        // Drop-shaped tooltips
+        series.tooltip.background.cornerRadius = 20;
+        series.tooltip.background.strokeOpacity = 0;
+        series.tooltip.pointerOrientation = "vertical";
+        series.tooltip.label.minWidth = 40;
+        series.tooltip.label.minHeight = 40;
+        series.tooltip.label.textAlign = "middle";
+        series.tooltip.label.textValign = "middle";
 
-    getDayWiseTimeSeries(new Date('11 Feb 2017 GMT').getTime(), 10, {
-        min: 10,
-        max: 1000
-    }) #}
+        // Make bullets grow on hover
+        var bullet = series.bullets.push(new am4charts.CircleBullet());
+        bullet.circle.strokeWidth = 2;
+        bullet.circle.radius = 4;
+        bullet.circle.fill = am4core.color("#fff");
 
-    function getNewSeries(baseval, heart_rate) {
-        var newDate = baseval + TICKINTERVAL;
-        lastDate = newDate
+        var bullethover = bullet.states.create("hover");
+        bullethover.properties.scale = 1.3;
 
-        for(var i = 0; i< data.length - 10; i++) {
-            // IMPORTANT
-            // we reset the x and y of the data which is out of drawing area
-            // to prevent memory leaks
-            data[i].x = newDate - XAXISRANGE - TICKINTERVAL
-            data[i].y = 0
-        }
-        
-        data.push({
-            x: newDate,
-            y: heart_rate
-        })
-        
-    }
+        // Make a panning cursor
+        chart.cursor = new am4charts.XYCursor();
+        chart.cursor.behavior = "panXY";
+        chart.cursor.xAxis = dateAxis;
+        chart.cursor.snapToSeries = series;
 
-    function resetData(){
-        // Alternatively, you can also reset the data at certain intervals to prevent creating a huge series 
-        data = data.slice(data.length - 10, data.length);
-    }
+        // Create vertical scrollbar and place it before the value axis
+        chart.scrollbarY = new am4core.Scrollbar();
+        chart.scrollbarY.parent = chart.leftAxesContainer;
+        chart.scrollbarY.toBack();
 
-    class LineChart extends React.Component {
-    
-    constructor(props) {
-      super(props);
+        // Create a horizontal scrollbar with previe and place it underneath the date axis
+        chart.scrollbarX = new am4charts.XYChartScrollbar();
+        chart.scrollbarX.series.push(series);
+        chart.scrollbarX.parent = chart.bottomAxesContainer;
 
-      this.state = {
-        options: {
-          chart: {
-              id: 'realtime',
-              animations: {
-                enabled: true,
-                easing: 'linear',
-                dynamicAnimation: {
-                  speed: 1000
-                }
-              },
-              toolbar: {
-                show: false
-              },
-              zoom: {
-                enabled: false
-              }
-            },
-            dataLabels: {
-              enabled: false
-            },
-            stroke: {
-              curve: 'smooth'
-            },
+        chart.events.on("ready", function () {
+          dateAxis.zoom({start:0.79, end:1});
+        });
+    }); // end am4core.ready()
+       
+    $("#btn_heart_rate_historical_search").click(function(){
+      chart = am4core.create("chartdiv", am4charts.XYChart);
+      var posting = $.post( "/qi/device/heart_rate/historical/process", 
+       { usn: 19 , date_start : $("#date_start").val(), date_end : $("#date_end").val()} );
 
-            title: {
-              text: 'Realtime Heart Rate',
-              align: 'left'
-            },
-            markers: {
-              size: 0
-            },
-            xaxis: {
-              type: 'datetime',
-              range: XAXISRANGE
-            },
-            yaxis: {
-              max: 255
-            },
-            legend: {
-              show: false
-            }
-        },
-        series: [{
-          data: data.slice()
-        }],
-      }
-    }
-    
-    componentDidMount() {
-      this.intervals()
-    }
+      posting.done(function(data){
+    // Set input format for the dates
+        chart.dateFormatter.inputDateFormat = "yyyy-MM-dd hh:mm:ss";
+        chart.data = data;
+        // Create axes
+        var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+        var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 
-    intervals () {
-      window.setInterval(() => {
-        
-        var posting = $.post( "/qi/device/heart_rate/realtime", { usn: 19 } );
-        
-        posting.done(function(heart_data){
-          getNewSeries(new Date().getTime(), heart_data.heart_rate)
+        // Create series
+        var series = chart.series.push(new am4charts.LineSeries());
+        series.dataFields.valueY = "value";
+        series.dataFields.dateX = "date";
+        series.tooltipText = "{value}"
+        series.strokeWidth = 2;
+        series.minBulletDistance = 15;
 
-          ApexCharts.exec('realtime', 'updateSeries', [{
-            data: data
-          }])
+        // Drop-shaped tooltips
+        series.tooltip.background.cornerRadius = 20;
+        series.tooltip.background.strokeOpacity = 0;
+        series.tooltip.pointerOrientation = "vertical";
+        series.tooltip.label.minWidth = 40;
+        series.tooltip.label.minHeight = 40;
+        series.tooltip.label.textAlign = "middle";
+        series.tooltip.label.textValign = "middle";
 
-        });//end done
-        
-        
-      }, 1000) // end setInterval()
-    }
+        // Make bullets grow on hover
+        var bullet = series.bullets.push(new am4charts.CircleBullet());
+        bullet.circle.strokeWidth = 2;
+        bullet.circle.radius = 4;
+        bullet.circle.fill = am4core.color("#fff");
 
-    render() {
+        var bullethover = bullet.states.create("hover");
+        bullethover.properties.scale = 1.3;
 
-      return (
-        <div>
-          <div id="chart">
-            <ReactApexChart options={this.state.options} series={this.state.series} type="line" height="350" />
-          </div>
-          <div id="html-dist">
-          </div>
-        </div>
-      );
-    }
+        // Make a panning cursor
+        chart.cursor = new am4charts.XYCursor();
+        chart.cursor.behavior = "panXY";
+        chart.cursor.xAxis = dateAxis;
+        chart.cursor.snapToSeries = series;
 
-  }
+        // Create vertical scrollbar and place it before the value axis
+        chart.scrollbarY = new am4core.Scrollbar();
+        chart.scrollbarY.parent = chart.leftAxesContainer;
+        chart.scrollbarY.toBack();
 
-  const domContainer = document.querySelector('#app');
-  ReactDOM.render(React.createElement(LineChart), domContainer);
+        // Create a horizontal scrollbar with previe and place it underneath the date axis
+        chart.scrollbarX = new am4charts.XYChartScrollbar();
+        chart.scrollbarX.series.push(series);
+        chart.scrollbarX.parent = chart.bottomAxesContainer;
 
+        chart.events.on("ready", function () {
+          dateAxis.zoom({start:0.79, end:1});
+        });
+      });
+    });
   </script>
 
 
@@ -613,17 +568,6 @@
 
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-
-
-<script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/prop-types@15.6.2/prop-types.min.js">
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/apexcharts@latest"></script>
-<script src="https://unpkg.com/react-apexcharts@1.1.0/dist/react-apexcharts.iife.min.js"></script>
 
 </body>
 

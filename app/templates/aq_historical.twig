@@ -19,6 +19,45 @@
   <!-- Custom styles for this template-->
   <link href="/css/sb-admin-2.min.css" rel="stylesheet">
   <style>
+  #button_device_list {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 14px;
+  padding: 20px;
+  width: 100px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+#button_device_list span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+#button_device_list span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+#button_device_list:hover span {
+  padding-right: 15px;
+}
+
+#button_device_list:hover span:after {
+  opacity: 1;
+  right: 0;
+}
 
   .btn { 
     width:80px; 
@@ -264,7 +303,6 @@
         <!-- End of Topbar -->
 <div class="container-fluid">
 
-    <div id = "device_list"></div>
     <div>
       <button id = 'aq_data' class = 'btn' style = "background-color:#556b2f ; border:1px #556b2f solid;" value = "ALL">ALL</button>
       <button id = 'aq_data' class = 'btn' style = "background-color:#daa520 ; border:1px #daa520 solid;" value = "CO">CO</button>
@@ -275,6 +313,7 @@
     </div>
 
   <div style = "text-align: center;">
+    <div id = "device_list"  style = "display: inline-block;margin: auto;"></div>
     <div id = "map" style = "display: inline-block; width:640px; height:480px;margin: auto;"></div>
 
     <div style ="display: inline-block; width:810px; height:480px; overflow:scroll;margin: auto;">
@@ -289,8 +328,8 @@
     <div style = "width:640px; height:100px; text-align: center;margin: auto;">
 
       <div style = 'margin: auto'>
-        <input type = "text" id = "date_start" onchange = "display_period_start()"> ~
-        <input type = "text" id = "date_end" onchange = "display_period_end()">
+        <input type = "text" id = "date_start"> ~
+        <input type = "text" id = "date_end">
         <button id = "aq_data_search" class = "btn btn-primary btn-user btn-block">Search!</button>
       </div>
       
@@ -430,10 +469,25 @@
       $( "#date_end" ).datepicker({
         dateFormat: 'yy-mm-dd'
       });
+
+      var posting = $.post("/qi/device/list_view", {usn:localStorage.getItem("usn")});
+      posting.done(function(data){
+        $.each(data, function(index, item){
+          if($.isNumeric(index)){
+            $("#device_list").append("<div><button class = 'btn_device_list' id = 'button_device_list' value = " + item['ssn'] +"><span>" + item['device_name'] + "</span></button></div>");
+          }
+        });
+      });
+
+      
     });
 
       //Show Google Map When Start
     $( window ).load(function() {
+      $( ".btn_device_list" ).click(function(){
+          localStorage.setItem("clicked_ssn", this.value);
+            setPin('all');
+      });
           loadMap();
           google.load("visualization", "1", {packages:["corechart"]});
 
@@ -449,11 +503,16 @@
 
           setPin('all');
 
+
+          
+
     });//end window.load
 
     function sign_in_btn_click(){
       window.location.href = "/qi/sign-in";
     }
+
+    
   </script>
 
   {# Google Map API #}
@@ -472,11 +531,15 @@
 
         //get array AirQuality data
         function setPin(aqi_type){
-            
-          var posting = $.post( "/qi/device/aq_data/historical/process", 
+          if(typeof localStorage.getItem('clicked_ssn') == 'undefined')
+            var ssn = -1;
+          else
+            var ssn = localStorage.getItem('clicked_ssn');
+
+          var posting = $.post( "/qi/device/aq_data/move_map", 
           { lat_min : sw.lat(), lng_min : sw.lng(), lat_max : ne.lat(), lng_max : ne.lng() ,
-            date_start : $('#date_start').val(),  date_end : $('#date_end').val(), usn : 19} );
-              
+            date_start : $('#date_start').val(),  date_end : $('#date_end').val(), usn : localStorage.getItem('usn'), ssn : ssn} );
+               
           posting.done( function (data) {
 
             for(var i = 0 ; i < gmarker.length ; i ++){
