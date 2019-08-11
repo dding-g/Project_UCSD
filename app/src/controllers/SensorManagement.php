@@ -70,6 +70,12 @@ final class SensorManagement extends BaseController
     return $response->withjson(json_decode( $this->sensor_db_model->get_deviceList_usn($usn['usn'] )));
   }
 
+  //WEB : display device information 
+  public function web_device_list_using_ssn_process(Request $request, Response $response, $args)  {
+    $data = $request->getParsedBody();
+    return $response->withjson(json_decode( $this->sensor_db_model->get_deviceList_ssn($data['ssn'] )));
+  }
+
   //WEB : get historical aq data using ssn AND datetime
   public function web_get_historical_aq_chart_data(Request $request, Response $response, $args)
   {
@@ -78,6 +84,7 @@ final class SensorManagement extends BaseController
 
     return $response->withJson(json_decode($result_code));
   }
+  
   
   //Android : get historical aq data
   public function mobile_get_historical_aq_data(Request $request, Response $response, $args)
@@ -94,7 +101,16 @@ final class SensorManagement extends BaseController
     $hr_data_json = file_get_contents('php://input');
     $hr_data = json_decode($hr_data_json, true);
 
-    return $this->sensor_db_model->get_historical_re_data($hr_data['usn']);
+    return $this->sensor_db_model->get_historical_hr_data($hr_data);
+  }
+
+  //Android : get historical hr data Using location  datetime
+  public function mobile_get_historical_hr_data_using_loc_datetime(Request $request, Response $response, $args)
+  {
+    $hr_data_json = file_get_contents('php://input');
+    $hr_data = json_decode($hr_data_json, true);
+
+    return $this->sensor_db_model->get_realtime_hr_data_using_loc_date($hr_data);
   }
 
   //view Air quality historical data page
@@ -118,9 +134,9 @@ final class SensorManagement extends BaseController
   //real time heart rate data
   public function web_heart_rate_realtime_data_process(Request $request, Response $response, $args)  {
     $hr_data = $request->getParsedBody();
-    $result_code = $this->sensor_db_model->get_realtime_hr_data($hr_data['usn']);
+    $result = $this->sensor_db_model->get_realtime_hr_data($hr_data['usn']);
 
-    return $response->withJson(json_decode($result_code));
+    return $response->withJson(json_decode($result));
   }
 
   //historical heart rate data

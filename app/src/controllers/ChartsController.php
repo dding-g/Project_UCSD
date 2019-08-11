@@ -21,16 +21,17 @@ final class ChartsController extends BaseController
                     $json_array['cols'] = array(
                             array('id'=>'', 'label'=>'date/time', 'type'=>'string'),
                             array('id'=>'', 'label'=>$sensor_label, 'type'=>'number'));
-
+                    
                     // loop thru the sensor data and build sensor_array
                     foreach ($chartdata as $row) {
                         if(is_array($row)){
                             $sensor_array = array();
                             $sensor_array[] = array('v'=>$row['datetime_format']);
                             $sensor_array[] = array('v'=>$row[$sensor_label]);
-                        
+                            
                             // add current sensor_array line to $rows
                             $rows[] = array('c'=>$sensor_array);
+                            
                         }
                     }
                 
@@ -38,9 +39,9 @@ final class ChartsController extends BaseController
                     $json_array['rows'] = $rows;
                     $rows = array();
                 
-                    $master_array[$sensor_label][] = $json_array;
+                    $master_array['chart'][$sensor_label][] = $json_array;
                 }
-                
+
               return $response->withJson($master_array);
 
             } else {

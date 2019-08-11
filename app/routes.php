@@ -96,10 +96,13 @@ $app->post('/android/device/deregistrate_process', 'App\Controller\SensorManagem
     ->setName('android_sensor_deregistration_process');
 
 $app->post('/qi/device/list_view', 'App\Controller\SensorManagement:web_device_list_view_process')
-    ->setName('android_device_list_view_process');
+    ->setName('web_device_list_view_process');
 
 $app->post('/android/device/list_view', 'App\Controller\SensorManagement:android_device_list_view_process')
     ->setName('android_device_list_view_process');
+
+$app->post('/qi/device/google_map_clicked_device/process', 'App\Controller\SensorManagement:web_device_list_using_ssn_process')
+    ->setName('web_device_list_using_ssn_process');
 //======================================
 
 
@@ -143,9 +146,9 @@ $app->post('/qi/device/aq_record', 'App\Controller\SensorManagement:airQuality_r
 $app->get('/qi/device/aq_data/historical', 'App\Controller\SensorManagement:aq_historical_view')
     ->setName('aq_historical_view');
 
-// $app->post('/qi/device/aq_data/historical/process', 'App\Controller\SensorManagement:web_historical_aq_chart_data')
-//     ->setName('web_historical_aq_chart_data');
-
+$app->post('/qi/device/aq_data/historical/process', 'App\Controller\SensorManagement:web_get_historical_aq_chart_data')
+    ->setName('web_get_historical_aq_chart_data');
+    
 $app->post('/qi/android/aq_data/historical/process', 'App\Controller\SensorManagement:mobile_get_historical_aq_data')
     ->setName('mobile_get_historical_aq_data');
 
@@ -167,6 +170,13 @@ $app->get('/qi/device/heart_rate/historical', 'App\Controller\SensorManagement:h
 $app->post('/qi/device/heart_rate/realtime/process', 'App\Controller\SensorManagement:web_heart_rate_realtime_data_process')
     ->setName('web_heart_rate_realtime_data');
 
+
 $app->post('/qi/device/heart_rate/historical/process', 'App\Controller\SensorManagement:web_heart_rate_historical_data_process')
     ->setName('web_heart_rate_historical_data_process');
+
+$app->post('/qi/android/heart_rate/historical/process', 'App\Controller\SensorManagement:mobile_get_historical_hr_data')
+    ->setName('mobile_get_historical_hr_data');
+
+$app->post('/qi/android/heart_rate/realtime/process', 'App\Controller\SensorManagement:mobile_get_historical_hr_data_using_loc_datetime')
+    ->setName('mobile_get_historical_hr_data_using_loc_datetime');
 //===========================================

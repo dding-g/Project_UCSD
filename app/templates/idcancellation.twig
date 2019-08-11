@@ -100,6 +100,13 @@
 
 
   <script>
+      $(document).ready(function(){
+        if(typeof localStorage.getItem('usn') == "undefined" || localStorage.getItem('usn') == null){
+          alert("Please Sign-in first!!")
+          window.location.replace("/");
+        }
+      });
+      
       window.onload = function(){
         if(typeof localStorage.getItem('usn') != 'undefined'){
           $("#usn").val(localStorage.getItem('usn'));

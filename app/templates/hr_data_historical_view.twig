@@ -20,7 +20,6 @@
   <link href="/css/sb-admin-2.min.css" rel="stylesheet">
   <link href="/assets/styles.css" rel="stylesheet" />
 
-
 </style>
   <style>
 
@@ -92,7 +91,7 @@
   <!-- Page Wrapper -->
   <div id="wrapper">
 
-    <!-- Sidebar -->
+<!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
@@ -106,26 +105,20 @@
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
 
-      <!-- Nav Item - Dashboard -->
-      <li class="nav-item active">
-        <a class="nav-link" href="index.html">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>MENU</span></a>
-      </li>
-
+      
       <!-- Divider -->
       <hr class="sidebar-divider">
 
       <!-- Heading -->
-      <div class="sidebar-heading">
+      <div class="sidebar-heading" style = "font-size : 15pt ; color : gray">
         MENU
       </div>
       
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>AirQuality Data</span>
+          <i class="fas fa-fw fa-cog" style = "color : gray"></i>
+          <span style = "font-size : 10pt ; color : gray">AirQuality Data</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
@@ -138,8 +131,8 @@
       <!-- Nav Item - Utilities Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-          <i class="fas fa-fw fa-wrench"></i>
-          <span>Heart Rate</span>
+          <i class="fas fa-fw fa-wrench" style = "color : gray"></i>
+          <span style = "font-size : 10pt ; color : gray">Heart Rate</span>
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
@@ -152,39 +145,7 @@
 
       <!-- Divider -->
       <hr class="sidebar-divider">
-
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        Addons
-      </div>
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>Pages</span>
-        </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Login Screens:</h6>
-            <a class="collapse-item" href="login.html">Login</a>
-            <a class="collapse-item" href="register.html">Register</a>
-            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-            <div class="collapse-divider"></div>
-            <h6 class="collapse-header">Other Pages:</h6>
-            <a class="collapse-item" href="404.html">404 Page</a>
-            <a class="collapse-item" href="blank.html">Blank Page</a>
-          </div>
-        </div>
-      </li>
-
-    
-      <!-- Nav Item - Tables -->
-      <li class="nav-item">
-        <a class="nav-link" href="tables.html">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Tables</span></a>
-      </li>
+      
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
@@ -285,6 +246,7 @@
          #}
 <div class="container-fluid">
 
+
     <div>
       <p style="font-weight:bold ; font-size:20pt; ">Heart Rate Historical</p>
 
@@ -299,13 +261,13 @@
       </div>
 
 
-      <div id="chartdiv"></div>
+  <div id="chartdiv"></div>
   <div style = "text-align: center;">
 
     <div style = "width:640px; height:100px; text-align: center;margin: auto;">
       <div style = 'margin: auto'>  
-        <input type = "text" id = "date_start"> ~
-        <input type = "text" id = "date_end">
+        <input type = "text" id = "date_start" style = "font-size : 10pt ; padding : 1px; text-align:center" readonly> ~
+        <input type = "text" id = "date_end" style = "font-size : 10pt ; padding : 1px; text-align:center" readonly>
         <button id = "btn_heart_rate_historical_search" class = "btn btn-primary btn-user btn-block">Search!</button>
       </div>
       
@@ -363,6 +325,9 @@
   </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+  <script type="text/javascript" src="/js/locales/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
 
   <script>
     $('#sign_out_form').submit(function( event ) {
@@ -387,10 +352,15 @@
    
   </script>
 
-
-
   <script>
+  
     $(document).ready(function(){
+ 
+      if(typeof localStorage.getItem('usn') == "undefined" || localStorage.getItem('usn') == null){
+        alert("Please Sign-in first!!")
+        window.location.replace("/");
+      }
+
       var email = localStorage.getItem('email');
       var usn = localStorage.getItem('usn');
 
@@ -401,6 +371,7 @@
         $("#userDropdown").prop("enable", true);
         document.getElementById('email').innerHTML = email;
       }
+
       $( "#date_start" ).datepicker({
         dateFormat: 'yy-mm-dd'
       });
@@ -408,13 +379,14 @@
       $( "#date_end" ).datepicker({
         dateFormat: 'yy-mm-dd'
       });
+      
     });
+
 
     function sign_in_btn_click(){
       window.location.href = "/qi/sign-in";
     }
   </script>
-
 
 <!-- Resources -->
 <script src="https://www.amcharts.com/lib/4/core.js"></script>
@@ -423,7 +395,7 @@
 
   <!-- Chart code -->
   <script>
-    am4core.ready(function() {
+    {# am4core.ready(function() {
     // Themes begin
     am4core.useTheme(am4themes_animated);
     // Themes end
@@ -480,7 +452,7 @@
         chart.events.on("ready", function () {
           dateAxis.zoom({start:0.79, end:1});
         });
-    }); // end am4core.ready()
+    }); // end am4core.ready() #}
        
     $("#btn_heart_rate_historical_search").click(function(){
       chart = am4core.create("chartdiv", am4charts.XYChart);
@@ -490,16 +462,18 @@
       posting.done(function(data){
     // Set input format for the dates
         chart.dateFormatter.inputDateFormat = "yyyy-MM-dd hh:mm:ss";
+        chart.dateFormatter.dateFormat = "yyyy-MM-dd";
         chart.data = data;
         // Create axes
         var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
         var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+        dateAxis.skipEmptyPeriods = true; 
 
         // Create series
         var series = chart.series.push(new am4charts.LineSeries());
         series.dataFields.valueY = "value";
         series.dataFields.dateX = "date";
-        series.tooltipText = "{value}"
+        series.tooltipText = "{dateX.formatDate('yyyy-MM-dd')}: {valueY.formatNumber('#.00')}"
         series.strokeWidth = 2;
         series.minBulletDistance = 15;
 
@@ -545,6 +519,7 @@
   </script>
 
 
+ 
   <!-- Bootstrap core JavaScript-->
   <script src="/vendor/jquery/jquery.min.js"></script>
   <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -564,7 +539,7 @@
   <script src="/js/demo/chart-area-demo.js"></script>
   <script src="/js/demo/chart-pie-demo.js"></script>
 
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 </body>

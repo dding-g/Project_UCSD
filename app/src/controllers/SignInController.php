@@ -101,7 +101,7 @@ final class SignInController extends BaseController
           $usn = json_decode($usn_json, true);
 
           $sign_in_decode['usn'] = (int)$usn['usn'];
-          return json_encode($sign_in_decode); //success
+          return json_encode($usn); //success
         }
 
       }else{

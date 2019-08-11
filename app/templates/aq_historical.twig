@@ -20,6 +20,66 @@
   <!-- Custom styles for this template-->
   <link href="/css/sb-admin-2.min.css" rel="stylesheet">
   <style>
+
+/* The container must be positioned relative: */
+.custom-select {
+  position: relative;
+  font-family: Arial;
+}
+
+.custom-select select {
+  display: none; /*hide original SELECT element: */
+}
+
+.select-selected {
+  background-color: DodgerBlue;
+}
+
+/* Style the arrow inside the select element: */
+.select-selected:after {
+  position: absolute;
+  content: "";
+  top: 14px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: #fff transparent transparent transparent;
+}
+
+/* Point the arrow upwards when the select box is open (active): */
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent #fff transparent;
+  top: 7px;
+}
+
+/* style the items (options), including the selected item: */
+.select-items div,.select-selected {
+  color: #ffffff;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  cursor: pointer;
+}
+
+/* Style items (options): */
+.select-items {
+  position: absolute;
+  background-color: DodgerBlue;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+
+/* Hide the items when the select box is closed: */
+.select-hide {
+  display: none;
+}
+
+.select-items div:hover, .same-as-selected {
+  background-color: rgba(0, 0, 0, 0.1);
+}
   /* width */
 ::-webkit-scrollbar {
   width: 20px;
@@ -78,7 +138,10 @@
   transition: all 0.5s;
   cursor: pointer;
   margin: 5px;
-  
+}
+
+li{
+  float: left;
 }
 
 #button_device_list span {
@@ -170,7 +233,7 @@
   <!-- Page Wrapper -->
   <div id="wrapper">
 
-    <!-- Sidebar -->
+<!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
@@ -184,26 +247,20 @@
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
 
-      <!-- Nav Item - Dashboard -->
-      <li class="nav-item active">
-        <a class="nav-link" href="index.html">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>MENU</span></a>
-      </li>
-
+      
       <!-- Divider -->
       <hr class="sidebar-divider">
 
       <!-- Heading -->
-      <div class="sidebar-heading">
+      <div class="sidebar-heading" style = "font-size : 15pt ; color : gray">
         MENU
       </div>
       
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>AirQuality Data</span>
+          <i class="fas fa-fw fa-cog" style = "color : gray"></i>
+          <span style = "font-size : 10pt ; color : gray">AirQuality Data</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
@@ -216,8 +273,8 @@
       <!-- Nav Item - Utilities Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-          <i class="fas fa-fw fa-wrench"></i>
-          <span>Heart Rate</span>
+          <i class="fas fa-fw fa-wrench" style = "color : gray"></i>
+          <span style = "font-size : 10pt ; color : gray">Heart Rate</span>
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
@@ -230,39 +287,7 @@
 
       <!-- Divider -->
       <hr class="sidebar-divider">
-
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        Addons
-      </div>
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>Pages</span>
-        </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Login Screens:</h6>
-            <a class="collapse-item" href="login.html">Login</a>
-            <a class="collapse-item" href="register.html">Register</a>
-            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-            <div class="collapse-divider"></div>
-            <h6 class="collapse-header">Other Pages:</h6>
-            <a class="collapse-item" href="404.html">404 Page</a>
-            <a class="collapse-item" href="blank.html">Blank Page</a>
-          </div>
-        </div>
-      </li>
-
-    
-      <!-- Nav Item - Tables -->
-      <li class="nav-item">
-        <a class="nav-link" href="tables.html">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Tables</span></a>
-      </li>
+      
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
@@ -348,137 +373,81 @@
         <!-- End of Topbar -->
 <div class="container-fluid">
   <p id = "lb_search_txt" style = "font-size : 25pt">What do you want to find?</p>
-  <div style = "text-align: center;">
-    <div style ="height:480px; display: inline-block; float : left ;border-style: solid; padding:30px; margin : 10px;">
-    <p style = "color:#888888; font-size : 15pt; text-align:left">Datetime</p>
-    <hr>
+  <div class = "col" style = "text-align: center;">
+    <div class = "row" style = "text-align: center;">
+      <div class = "col-lg-6 mb-4" style = "flex : 0 0 30%">
+        <p style = "color:#888888; font-size : 15pt; text-align:left">Datetime</p>
+        <hr>
 
-      <div style = 'margin: auto; vertical-align:middle;'>
-        <input type = "text" id = "date_start" onchange = "change_lb_aqi_data_text()"> 
-        <p style = "font-size:30pt"> ~ </p>
-        <input type = "text" id = "date_end" onchange = "change_lb_aqi_data_text()">
+        <div>
+        
+          <input type = "text" id = "date_start" style = "font-size : 12pt ; text-align : center ; padding : 15px" onchange = "change_lb_aqi_data_text()" readonly> 
+          ~
+          <input type = "text" id = "date_end" style = "font-size : 12pt ; text-align : center ; padding : 15px" onchange = "change_lb_aqi_data_text()" readonly>
+        </div>
+
+      </div>
+
+      <div  class = "col-lg-6 mb-4" style = "flex : 0 0 20%">
+
+        <p style = "color:#888888; font-size : 15pt; text-align:left">AQI type</p>
+        <hr>
+            <select class="aq_data" style = "padding-left: 20px ; padding-right: 20px ; padding-top: 10px ; padding-bottom: 10px">
+                <option >SELECT AQ TYPE</option>
+                <option value="ALL">ALL</option>
+                <option value="CO">CO</option>
+                <option value="SO2">SO2</option>
+                <option value="O3">O3</option>
+                <option value="NO2">NO2</option>
+                <option value="PM2.5">PM2.5</option>
+                <option value="Temperature">Temperature</option>
+            </select>
+
+      </div>
+
+      <div  class = "col-lg-6 mb-4" style = "flex : 0 0 50% ; overflow-x : scroll ">
+        <p style = "color:#888888; font-size : 15pt; text-align:left">Device List</p>
+        <hr> 
+
+        <ul id="list" style = "list-style:none; padding-left:0px;">
+        </ul>
+      </div>
+
+      
+
+    </div>
+
+  <div class="col">
+    <div class = "row" style = "text-align: center;">
+
+      <div class = "col-lg-6 mb-4" style = "flex : 0 0 50%">
+        <div style ="display: inline-block; width:810px; height:480px; margin: auto; border-style: solid; padding:30px; margin : 10px;">
+          <p style = "color:#888888; font-size : 15pt; text-align:left">Searched Sensor Location</p>
+          <hr>
+
+          <div id = "map" style = "width:100%; height:80%;"></div>
+        </div>
+      </div>
+
+      <div class = "col-lg-6 mb-4" style = "flex : 0 0 50%">
+        <div style ="display: inline-block; width:900px; height:480px; overflow-y:scroll;margin: auto; border-style: solid; padding:30px; margin : 10px;">
+          <p style = "color:#888888; font-size : 15pt; text-align:left">Data Chart</p>
+          <hr>
+
+          <div id="chart_div_CO"></div>
+          <div id="chart_div_SO2"></div>
+          <div id="chart_div_O3"></div>
+          <div id="chart_div_NO2"></div>
+          <div id="chart_div_PM2_5"></div>
+          <div id="chart_div_temperature"></div>
+        
+        </div>
       </div>
 
     </div>
+  </div>
+
     
-    <div style ="height:480px; display: inline-block; float : left ;border-style: solid; padding:30px; margin : 10px; overflow-y:scroll;">
-      <p style = "color:#888888; font-size : 15pt; text-align:left">Device List</p>
-      <hr> 
-
-      <ul id="list" style = "list-style:none; padding-left:0px;">
-      </ul>
-    </div>
-
-    <div style ="height:480px; display: inline-block; float : left ;border-style: solid; padding:30px; margin : 10px; overflow-y:scroll;">
-      <p style = "color:#888888; font-size : 15pt; text-align:left">AQI type</p>
-      <hr>
-     
-      <ul style = "list-style:none; padding-left:0px;">
-        <li>
-          <button class = 'aq_data' style = "width:80px; 
-                                              height:40px; 
-                                              border:1px #3399dd solid; 
-                                              margin:15px auto; 
-                                              background-color:#66aaff; 
-                                              text-align:center; 
-                                              cursor: pointer; 
-                                              color:#FFFFFF; 
-                                              transition:all 0.9s; 
-                                              color 0.3;  background-color:#556b2f ; border:1px #556b2f solid;" value = "ALL">ALL</button>
-        </li>
-
-        <li>
-          <button class = 'aq_data' style = "width:80px; 
-                                              height:40px; 
-                                              border:1px #3399dd solid; 
-                                              margin:15px auto; 
-                                              background-color:#66aaff; 
-                                              text-align:center; 
-                                              cursor: pointer; 
-                                              color:#FFFFFF; 
-                                              transition:all 0.9s; 
-                                              color 0.3; background-color:#daa520 ; border:1px #daa520 solid;" value = "CO">CO</button>
-        </li>
-
-        <li>
-          <button class = 'aq_data' style = "width:80px; 
-                                              height:40px; 
-                                              border:1px #3399dd solid; 
-                                              margin:15px auto; 
-                                              background-color:#66aaff; 
-                                              text-align:center; 
-                                              cursor: pointer; 
-                                              color:#FFFFFF; 
-                                              transition:all 0.9s; 
-                                              color 0.3; background-color:#bdb76b ; border:1px #bdb76b solid;" value = "SO2">SO2</button>
-        </li>
-
-        <li>
-          <button class = 'aq_data' style = "width:80px; 
-                                              height:40px; 
-                                              border:1px #3399dd solid; 
-                                              margin:15px auto; 
-                                              background-color:#66aaff; 
-                                              text-align:center; 
-                                              cursor: pointer; 
-                                              color:#FFFFFF; 
-                                              transition:all 0.9s; 
-                                              color 0.3; background-color:#6b8e23 ; border:1px #6b8e23 solid;" value = "O3">O3</button>
-        </li>
-
-        <li>
-          <button class = 'aq_data' style = "width:80px; 
-                                            height:40px; 
-                                            border:1px #3399dd solid; 
-                                            margin:15px auto; 
-                                            background-color:#66aaff; 
-                                            text-align:center; 
-                                            cursor: pointer; 
-                                            color:#FFFFFF; 
-                                            transition:all 0.9s; 
-                                            color 0.3; background-color:#808000 ; border:1px #808000 solid;" value = "NO2">NO2</button>
-        </li>
-
-        <li>
-          <button class = 'aq_data' style = "width:80px; 
-                                              height:40px; 
-                                              border:1px #3399dd solid; 
-                                              margin:15px auto; 
-                                              background-color:#66aaff; 
-                                              text-align:center; 
-                                              cursor: pointer; 
-                                              color:#FFFFFF; 
-                                              transition:all 0.9; 
-                                              color 0.3; background-color:#008000 ; border:1px #008000 solid;" value = "PM2.5">PM2.5</button>
-        </li>
-
-        <li>
-          <button class = 'aq_data' style = "width:120px; 
-                                              height:40px; 
-                                              border:1px #3399dd solid; 
-                                              margin:15px auto; 
-                                              background-color:#66aaff; 
-                                              text-align:center; 
-                                              cursor: pointer; 
-                                              color:#FFFFFF; 
-                                              transition:all 0.9s; 
-                                              color 0.3; background-color:#008000 ; border:1px #008000 solid;" value = "temperature">Temperature</button>
-        </li>
-      </ul>
-    </div>
-
-
-    <div style ="display: inline-block; width:810px; height:480px; overflow-y:scroll;margin: auto; border-style: solid; padding:30px; margin : 10px;">
-      <p style = "color:#888888; font-size : 15pt; text-align:left">Chart</p>
-      <hr>
-
-      <div id="chart_div_CO"></div>
-      <div id="chart_div_SO2"></div>
-      <div id="chart_div_O3"></div>
-      <div id="chart_div_NO2"></div>
-      <div id="chart_div_PM2_5"></div>
-      <div id="chart_div_temperature"></div>
-    </div>
 
 
   </div>
@@ -564,6 +533,11 @@
 
   <script>
     $(document).ready(function(){
+      if(localStorage.getItem('usn') == null){
+        alert("Please Sign-in first!!");
+        window.location.replace("/");
+      }
+      
       var email = localStorage.getItem('email');
       var usn = localStorage.getItem('usn');
       chart_drawed = [];
@@ -607,6 +581,9 @@
 
       //Show Google Map When Start
     $( window ).load(function() {
+      user_lat = 0;
+      user_lng = 0;
+
       $( ".btn_device_list" ).click(function(event){
           localStorage.setItem("clicked_ssn", $(this).val());
           $("#lb_search_txt").html( "I want to find " + print_aqi_type + " data between " + $("#date_start").val() + " ~ " + $('#date_end').val() + 
@@ -614,21 +591,22 @@
       });
      google.load("visualization", "1", {packages:["corechart"]});
 
+
     function drawChart(clicked_ssn) {
         var posting = $.post( "/qi/device/aq_data/historical/chartdata/process",
         {date_start : $("#date_start").val(), date_end : $('#date_end').val(), usn : localStorage.getItem('usn'), ssn : clicked_ssn});
         
         posting.done(function(data){
           // parse the json data
-            var oobj = data;
+            var oobj = data['chart'];
 
             var title_array = {
-              "CO" : "CO Chart",
-              "SO2" : "SO2 Chart",
-              "O3" : "O3 Chart",
-              "NO2" : "NO2 Chart",
-              "PM2_5" : "PM2.5 Chart",
-              "temperature" : "Temperature Chart",
+              "CO" : "CO Chart (ppb) ",
+              "SO2" : "SO2 Chart (SO2) ",
+              "O3" : "O3 Chart (O3)",
+              "NO2" : "NO2 Chart (NO2)",
+              "PM2_5" : "PM2.5 Chart (pm25)",
+              "temperature" : "Temperature Chart()"
               };
 
             for(i = 0 ; i < chart_drawed.length ; i ++){
@@ -641,7 +619,7 @@
                 var newData = JSON.stringify(oobj[s_array[i]][0]);
 
                 // Create our data table out of reduced json
-                var data = new google.visualization.DataTable(newData);
+                var chart_draw_data = new google.visualization.DataTable(newData);
 
                 var options = {
                     width: 800, height: 480,
@@ -652,19 +630,22 @@
                     }
                 };
 
-
+                
                 var chart = new google.visualization.LineChart(document.getElementById('chart_div_' + s_array[i]));
                 chart_drawed[i] = 'chart_div_' + s_array[i];
-                chart.draw(data, options);
+                chart.draw(chart_draw_data, options);
             }
+
+            
         });
       }
           
       $(".aq_data_search").click(function(event){
-        drawChart(37);
+        drawChart(localStorage.getItem('clicked_ssn'));
+        setPin();
       });
 
-      $(".aq_data").click(function(){
+      $(".aq_data").change(function(){
         switch(this.value){
           case "ALL":
           s_array = ["CO", "SO2", "O3", "NO2", "PM2_5", "temperature"];
@@ -719,8 +700,82 @@
       $("#lb_search_txt").html( "I want to find " + print_aqi_type + " data between " + $("#date_start").val() + " ~ " + $('#date_end').val() + 
                                     " from " + device_name_arr[localStorage.getItem('clicked_ssn')] );
     }
+
   </script>
     
+
+    {# Google Map API #}
+    <script>
+
+      function loadMap() {  
+          // Initialize Google Maps
+          var mapOptions = {
+            center:new google.maps.LatLng(0, 0),
+            zoom: 11,
+          }
+          map_setting = new google.maps.Map(document.getElementById("map"), mapOptions);
+          gmarker = [];
+          gcircle = [];
+      }
+
+        //get array AirQuality data
+        function setPin(){
+          var posting = $.post("/qi/device/aq_data/historical/process", 
+                                {"date_start" : $("#date_start").val(), "date_end" : $("#date_end").val(), 
+                                "usn" : localStorage.getItem("usn") , "ssn" : localStorage.getItem('clicked_ssn')});
+
+          posting.done(function(data){
+            for(var i = 0 ; i < gmarker.length ; i ++){
+              if(gmarker[i].getMap() != null)
+                gmarker[i].setMap(null);
+              
+            }
+
+            for(var i = 0 ; i < gcircle.length ; i++){
+              if(gcircle[i].getMap() != null)
+                gcircle[i].setMap(null);
+            }
+
+            var image = {
+                  url:  '/img/kangaroo_pin.png',
+                  scaledSize: new google.maps.Size(50, 50) // scaled size
+            };
+
+            $.each(data, function(index, item){
+                  var marker = new google.maps.Marker({
+                    map: map_setting,
+                    position: new google.maps.LatLng(item['latitude'], item['longitude']),
+                    title: localStorage.getItem('nickname'),
+                    icon: image
+                  });
+
+                  map_setting.setCenter(marker.getPosition());  
+                  var infowindow = new google.maps.InfoWindow();
+
+                  gmarker.push(marker);
+                  marker.addListener('click', function() {
+                    var contents = "<div><b>Sensor Name : " + item['device_name'] + "</b><hr><b>Mesure Datetime : "+ item['datetime'] +"</b></div>";
+                    
+                    infowindow.setContent(contents);
+                    infowindow.open(map, this);
+                  });
+
+            });
+            
+
+    
+                  
+
+          });//end done
+            
+        }//end setPin()
+    
+    </script>
+
+  <!--Google Map API-->
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgrRKZjmZGHOCm2Ohq0PqnVoAJVR2u7Zg&callback=loadMap&language=en&region=US">
+  </script>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 

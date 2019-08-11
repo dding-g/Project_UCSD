@@ -24,7 +24,6 @@
   <style>
   #chart {
     max-width: 650px;
-    margin: 35px auto;
   }
 
   .btn { 
@@ -90,8 +89,7 @@
 
   <!-- Page Wrapper -->
   <div id="wrapper">
-
-    <!-- Sidebar -->
+<!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
@@ -105,26 +103,20 @@
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
 
-      <!-- Nav Item - Dashboard -->
-      <li class="nav-item active">
-        <a class="nav-link" href="index.html">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>MENU</span></a>
-      </li>
-
+      
       <!-- Divider -->
       <hr class="sidebar-divider">
 
       <!-- Heading -->
-      <div class="sidebar-heading">
+      <div class="sidebar-heading" style = "font-size : 15pt ; color : gray">
         MENU
       </div>
       
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>AirQuality Data</span>
+          <i class="fas fa-fw fa-cog" style = "color : gray"></i>
+          <span style = "font-size : 10pt ; color : gray">AirQuality Data</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
@@ -137,8 +129,8 @@
       <!-- Nav Item - Utilities Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-          <i class="fas fa-fw fa-wrench"></i>
-          <span>Heart Rate</span>
+          <i class="fas fa-fw fa-wrench" style = "color : gray"></i>
+          <span style = "font-size : 10pt ; color : gray">Heart Rate</span>
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
@@ -151,39 +143,7 @@
 
       <!-- Divider -->
       <hr class="sidebar-divider">
-
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        Addons
-      </div>
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>Pages</span>
-        </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Login Screens:</h6>
-            <a class="collapse-item" href="login.html">Login</a>
-            <a class="collapse-item" href="register.html">Register</a>
-            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-            <div class="collapse-divider"></div>
-            <h6 class="collapse-header">Other Pages:</h6>
-            <a class="collapse-item" href="404.html">404 Page</a>
-            <a class="collapse-item" href="blank.html">Blank Page</a>
-          </div>
-        </div>
-      </li>
-
-    
-      <!-- Nav Item - Tables -->
-      <li class="nav-item">
-        <a class="nav-link" href="tables.html">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Tables</span></a>
-      </li>
+      
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
@@ -292,15 +252,23 @@
           <a id = "heart_rate_date"></a>
         </p>
         <p class="heart" style="font-weight:bold ; font-size:32pt ">
+          <i id = "user_info_text"></i>
           <i class="fa fa-heart fa-4x fa-beat"></i> <!-- heartrate animation -->
           <a id = "heart_rate_ratio"></a>
         </p>
       </div>
+      
+      <div class = "row">
+          <div class="col-lg-6 mb-4"><i id = "user_info_text"></i></div>
+      </div>
 
-      <div id="app"></div>
 
-      <div id="html">
-              &lt;div id=&quot;chart&quot;&gt;&#10;          &lt;ReactApexChart options={this.state.options} series={this.state.series} type=&quot;line&quot; height=&quot;350&quot; /&gt;&#10;        &lt;/div&gt;
+      <div class = "row">
+          <div class="col-lg-6 mb-4" id ="map" style = "width:100px; !important height:388px;"></div>
+          <div class="col-lg-6 mb-4" id="app"></div>
+          <div id="html">
+                  &lt;div id=&quot;chart&quot;&gt;&#10;          &lt;ReactApexChart options={this.state.options} series={this.state.series} type=&quot;line&quot; height=&quot;350&quot; /&gt;&#10;        &lt;/div&gt;
+          </div>
       </div>
 
 
@@ -389,6 +357,10 @@
 
   <script>
     $(document).ready(function(){
+      if(typeof localStorage.getItem('usn') == "undefined" || localStorage.getItem('usn') == null){
+        alert("Please Sign-in first!!")
+        window.location.replace("/");
+      }
       var email = localStorage.getItem('email');
       var usn = localStorage.getItem('usn');
 
@@ -406,21 +378,33 @@
       $( "#date_end" ).datepicker({
         dateFormat: 'yy-mm-dd'
       });
+
+      $( "#user_info_text" ).html("This is information of "+localStorage.getItem("nickname") + " !!");
     });
 
       //Show Google Map When Start
     $( window ).load(function() {
+        user_lat = 0;
+        user_lng = 0;
+        
+        loadMap();
+
           setInterval(function() {
           // Do something every 2 seconds
-            var posting = $.post("/qi/device/heart_rate/realtime/process", {usn : 19});
+            var posting = $.post("/qi/device/heart_rate/realtime/process", {usn : localStorage.getItem("usn")});
 
             posting.done(function(data){
               if(data.result_code == 1){
                 $("#heart_rate_date").html(data.datetime);
                 $("#heart_rate_ratio").html(data.heart_rate);
+                user_lat = data.latitude;
+                user_lng = data.longitude;
+                setPin();
               }
             });
           }, 1000);
+
+         
     });//end window.load
 
     function sign_in_btn_click(){
@@ -525,8 +509,8 @@
               range: XAXISRANGE
             },
             yaxis: {
-              max: 150,
-              min: 70
+              max: 130,
+              min: 90
             },
             legend: {
               show: false
@@ -580,6 +564,70 @@
 
   </script>
 
+
+
+
+  {# Google Map API #}
+    <script>
+
+      function loadMap() {  
+          // Initialize Google Maps
+          var mapOptions = {
+            center:new google.maps.LatLng(0, 0),
+            zoom: 11,
+          }
+          map_setting = new google.maps.Map(document.getElementById("map"), mapOptions);
+          gmarker = [];
+          gcircle = [];
+      }
+
+        //get array AirQuality data
+        function setPin(){
+
+            for(var i = 0 ; i < gmarker.length ; i ++){
+              if(gmarker[i].getMap() != null)
+                gmarker[i].setMap(null);
+              
+            }
+
+            for(var i = 0 ; i < gcircle.length ; i++){
+              if(gcircle[i].getMap() != null)
+                gcircle[i].setMap(null);
+            }
+
+    
+                  var image = {
+                    url:  '/img/kangaroo_pin.png',
+                    scaledSize: new google.maps.Size(50, 50) // scaled size
+                  };
+
+                  var marker = new google.maps.Marker({
+                    map: map_setting,
+                    position: new google.maps.LatLng(user_lat, user_lng),
+                    title: localStorage.getItem('nickname'),
+                    icon: image
+                  });
+
+                  map_setting.setCenter(marker.getPosition());  
+                  var infowindow = new google.maps.InfoWindow();
+
+                  gmarker.push(marker);
+
+                  {# marker.addListener('click', function() {
+                    infowindow.setContent("<p><b>Nick Name</b></p><hr>" + localStorage.getItem('nickname'));
+                    infowindow.open(map, this);
+                  }); #}
+        }//end setPin()
+      
+
+    </script>
+
+
+
+    <!--Google Map API-->
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgrRKZjmZGHOCm2Ohq0PqnVoAJVR2u7Zg&callback=loadMap&language=en&region=US">
+    </script>
 
   <!-- Bootstrap core JavaScript-->
   <script src="/vendor/jquery/jquery.min.js"></script>

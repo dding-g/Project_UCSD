@@ -10,7 +10,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>KANGAROO HOME</title>
+  <title style = "color : gray">KANGAROO HOME</title>
 
   <!-- Custom fonts for this template-->
   <link href="/vendor/fontawesome-free//css/all.min.css" rel="stylesheet" type="text/css">
@@ -32,6 +32,17 @@
     color 0.3; 
     }
 
+
+  .left-box {
+    float: left;
+    width: 50%;
+    margin : 20px;
+  }
+  .right-box {
+    float: right;
+    width: 50%;
+    margin : 20px;
+  }
   </style>
 </head>
 
@@ -54,26 +65,20 @@
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
 
-      <!-- Nav Item - Dashboard -->
-      <li class="nav-item active">
-        <a class="nav-link" href="index.html">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>MENU</span></a>
-      </li>
-
+      
       <!-- Divider -->
       <hr class="sidebar-divider">
 
       <!-- Heading -->
-      <div class="sidebar-heading">
+      <div class="sidebar-heading" style = "font-size : 15pt ; color : gray">
         MENU
       </div>
       
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>AirQuality Data</span>
+          <i class="fas fa-fw fa-cog" style = "color : gray"></i>
+          <span style = "font-size : 10pt ; color : gray">AirQuality Data</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
@@ -86,8 +91,8 @@
       <!-- Nav Item - Utilities Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-          <i class="fas fa-fw fa-wrench"></i>
-          <span>Heart Rate</span>
+          <i class="fas fa-fw fa-wrench" style = "color : gray"></i>
+          <span style = "font-size : 10pt ; color : gray">Heart Rate</span>
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
@@ -100,39 +105,7 @@
 
       <!-- Divider -->
       <hr class="sidebar-divider">
-
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        Addons
-      </div>
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>Pages</span>
-        </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Login Screens:</h6>
-            <a class="collapse-item" href="login.html">Login</a>
-            <a class="collapse-item" href="register.html">Register</a>
-            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-            <div class="collapse-divider"></div>
-            <h6 class="collapse-header">Other Pages:</h6>
-            <a class="collapse-item" href="404.html">404 Page</a>
-            <a class="collapse-item" href="blank.html">Blank Page</a>
-          </div>
-        </div>
-      </li>
-
-    
-      <!-- Nav Item - Tables -->
-      <li class="nav-item">
-        <a class="nav-link" href="tables.html">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Tables</span></a>
-      </li>
+      
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
@@ -201,7 +174,7 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small" id = "email">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small" id = "email" style = "font-size : 15pt">
                 </span>
               </a>
               <!-- Dropdown - User Information -->
@@ -228,16 +201,164 @@
         <!-- End of Topbar -->
 <div class="container-fluid">
   <div>
-    <div>
-      <button id = 'aq_data' class = 'btn' style = "background-color:#556b2f ; border:1px #556b2f solid;" value = "ALL">ALL</button>
-      <button id = 'aq_data' class = 'btn' style = "background-color:#daa520 ; border:1px #daa520 solid;" value = "CO">CO</button>
-      <button id = 'aq_data' class = 'btn' style = "background-color:#bdb76b ; border:1px #bdb76b solid;" value = "SO2">SO2</button>
-      <button id = 'aq_data' class = 'btn' style = "background-color:#6b8e23 ; border:1px #6b8e23 solid;" value = "O3">O3</button>
-      <button id = 'aq_data' class = 'btn' style = "background-color:#808000 ; border:1px #808000 solid;" value = "NO2">NO2</button>
-      <button id = 'aq_data' class = 'btn' style = "background-color:#008000 ; border:1px #008000 solid;" value = "PM2.5">PM2.5</button>
+
+
+    <div id = "map" style = "width:100%; height:600px;"></div>
+    
+    <div style = "padding : 10px; width : 100% ; text-align : center">
+      <button id = 'aq_data' class = 'btn' style = "margin : 10px ; width : 100px; background-color:#ffa500 ; border:1px #ffa07a solid;" value = "ALL">ALL</button>
+      <button id = 'aq_data' class = 'btn' style = "margin : 10px ; width : 100px; background-color:#daa520 ; border:1px #daa520 solid;" value = "CO">CO</button>
+      <button id = 'aq_data' class = 'btn' style = "margin : 10px ; width : 100px; background-color:#bdb76b ; border:1px #bdb76b solid;" value = "SO2">SO2</button>
+      <button id = 'aq_data' class = 'btn' style = "margin : 10px ; width : 100px; background-color:#b8860b ; border:1px #b8860b solid;" value = "O3">O3</button>
+      <button id = 'aq_data' class = 'btn' style = "margin : 10px ; width : 100px; background-color:#d2691e ; border:1px #d2691e solid;" value = "NO2">NO2</button>
+      <button id = 'aq_data' class = 'btn' style = "margin : 10px ; width : 100px; background-color:#a0522d ; border:1px #a0522d solid;" value = "PM2.5">PM2.5</button>
+    </div>
+    
+    <div class="row">
+      <div class="col-lg-12 mb-4">
+                  <div class="card bg-info text-white shadow"  id = "title" >
+                    <div class="card-body" style = "text-align:center">
+                      <i>Real Time Air Quality Data</i>
+                    </div>
+                  </div>
+      </div>
     </div>
 
-    <div id = "map" style = "width:640px; height:480px;"></div>
+    <div class="row">
+
+        <div class="col-lg-6 mb-4">
+                  <div class="card bg-primary text-white shadow">
+                      <div class = "card-body" style = "margin : 4px; text-align:center">AQI INDEX COLOR</div>
+                  </div>
+
+                  <div class="card bg-success text-white shadow">
+                      <div class = "card-body" style = "text-align:center">
+                        <p>Good<br>(Green)</p>
+                      </div>
+                  </div>
+
+                  <div class="card bg-warning text-white shadow" style = "background-color : #ffd700 !important">
+                      <div class = "card-body" style = " text-align:center">
+                        <p>Moderate<br>(Yellow)</p>
+                      </div>
+                  </div>
+
+                  <div class="card bg-primary text-white shadow" style = "background-color : #FFA500 !important">
+                      <div class = "card-body" style = "text-align:center">
+                        <p>Unhealthy for Sensitive Groups<br>(Orange)</p>
+                      </div>
+                  </div>
+
+                  <div class="card bg-primary text-white shadow" style = "background-color : #ff0000 !important">
+                      <div class = "card-body" style = "text-align:center">
+                        <p>Unhealthy<br>(Red)</p>
+                      </div>
+                  </div>
+
+                  <div class="card bg-primary text-white shadow" style = "background-color : #800080 !important">
+                      <div class = "card-body" style = "text-align:center">
+                        <p>Very Unhealthy<br>(Purple)</p>
+                      </div>
+                  </div>
+
+                  <div class="card bg-primary text-white shadow" style = "background-color : #800000 !important">
+                      <div class = "card-body" style = "text-align:center">
+                        <p>Hazardous<br>(Maroon)</p>
+                      </div>
+                  </div>
+        </div>
+
+      <div div class="col-lg-6 mb-4">
+      <div class = "row">
+        <div class="col-lg-6 mb-4">
+                  <div class="card bg-primary text-white shadow" id = "div_device_name" style = "margin-bottom:20px ;flex-direction : row">
+                      <div class = "left-box">
+                        Device Name
+                      </div>
+
+                      <div class = "right-box"> 
+                        <i id = "device_name_val"></i> 
+                      </div>
+                  </div>
+
+                  <div class="card bg-primary text-white shadow" id = "div_CO" style = "margin-bottom:20px ;flex-direction : row">
+                      <div class = "left-box">
+                        CO AQI DATA
+                      </div>
+
+                      <div class = "right-box"> 
+                        <i id = "CO_val"></i> 
+                      </div>
+                  </div>
+
+                  <div class="card bg-primary text-white shadow" id = "div_SO2" style = "margin-bottom:20px ;flex-direction : row">
+                    <div class = "left-box">
+                        SO2 AQI DATA
+                      </div>
+
+                      <div class = "right-box"> 
+                        <i id = "SO2_val"> </i> 
+                      </div>
+                  </div>
+
+                  <div class="card bg-primary text-white shadow" id = "div_O3" style = "margin-bottom:20px ;flex-direction : row">
+                    <div class = "left-box">
+                        O3 AQI DATA
+                      </div>
+
+                      <div class = "right-box"> 
+                        <i id = "O3_val"> </i> 
+                      </div>
+                  </div>
+
+                  <div class="card bg-primary text-white shadow" id = "div_NO2" style = "margin-bottom:20px ;flex-direction : row">
+                    <div class = "left-box">
+                        NO2 AQI DATA
+                      </div>
+
+                      <div class = "right-box"> 
+                        <i id = "NO2_val"> </i> 
+                      </div>
+                  </div>
+          </div>
+
+        <div class="col-lg-6 mb-4">
+
+                  <div class="card bg-primary text-white shadow" id = "div_PM2_5" style = "margin-bottom:20px ;flex-direction : row">
+                    <div class = "left-box">
+                        PM2.5 AQI DATA
+                      </div>
+
+                      <div class = "right-box"> 
+                        <i id = "PM2_5_val"> </i> 
+                      </div>
+                  </div>
+
+                  <div class="card bg-primary text-white shadow" id = "div_temperature" style = "margin-bottom:20px ;flex-direction : row">
+                    <div class = "left-box">
+                        Temperature
+                      </div>
+
+                      <div class = "right-box"> 
+                        <i id = "temperature_val"> </i> 
+                      </div>
+                  </div>
+
+                  <div class="card bg-primary text-white shadow" id = "div_datetime" style = "margin-bottom:20px ;flex-direction : row">
+                    <div class = "left-box">
+                        Mesure Datetime
+                      </div>
+
+                      <div class = "right-box"> 
+                        <i id = "datetime_val"> </i> 
+                      </div>
+                  </div>
+          </div>
+          </div>
+        </div>      
+      </div>
+    </div>
+
   </div>
 
 </div>
@@ -318,6 +439,11 @@
     $(document).ready(function(){
       var email = localStorage.getItem('email');
       var usn = localStorage.getItem('usn');
+      displayed_sensor_data = [];
+      displayed_sensor_color = [];
+      displayed_sensor_name = "";
+      aqi_data_type = ['CO', 'SO2', 'O3', 'NO2', 'PM2_5', 'temperature', 'datetime'];
+      is_clicked_marker = 0;
 
       if(usn == null){
         document.getElementById('email').innerHTML = "<Button class='btn btn-primary btn-user btn-block' onclick = 'sign_in_btn_click()'>SIGN IN</Button>";
@@ -342,10 +468,14 @@
               var bounds = map_setting.getBounds();
               ne = bounds.getNorthEast(); // LatLng of the north-east corner
               sw = bounds.getSouthWest(); // LatLng of the south-west corder
-
               setPin('all');
           });//end listener
-          setPin('all');
+
+          setInterval(function(){
+            setPin('all');
+            setData_in_databox();
+          }, 3000);
+          
 
         });//end post first
 
@@ -362,7 +492,7 @@
           // Initialize Google Maps
           var mapOptions = {
             center:new google.maps.LatLng(aq_data_load.latitude, aq_data_load.longitude),
-            zoom: 11,
+            zoom: 15,
           }
           map_setting = new google.maps.Map(document.getElementById("map"), mapOptions);
           gmarker = [];
@@ -371,23 +501,13 @@
 
         //get array AirQuality data
         function setPin(aqi_type){
-            
+          remove_pin();
           var posting = $.post( "/qi/device/aq_data/move_map", 
           { lat_min : sw.lat(), lng_min : sw.lng(), lat_max : ne.lat(), lng_max : ne.lng() , aqi_type : aqi_type, usn : -1, ssn : -1} );
               
           posting.done( function (data) {
 
-            for(var i = 0 ; i < gmarker.length ; i ++){
-              if(gmarker[i].getMap() != null)
-                gmarker[i].setMap(null);
-              
-            }
-
-            for(var i = 0 ; i < gcircle.length ; i++){
-              if(gcircle[i].getMap() != null)
-                gcircle[i].setMap(null);
-            }
-
+           
             if(aqi_type == 'all'){
               $.each(data,function(index, item){
 
@@ -405,20 +525,46 @@
                     icon: image
                   });
 
-                  var infowindow = new google.maps.InfoWindow();
 
                   gmarker.push(marker);
+                  
+                  if(is_clicked_marker != 0){
+                    for(var i = 0 ; i < aqi_data_type.length ; i ++){
+                        if(aqi_data_type[i] != 'temperature' && aqi_data_type[i] != 'datetime'){
+                          displayed_sensor_color[i] = item["AQI_" + aqi_data_type[i] + "_COLOR"];
+                          displayed_sensor_data[i] = item["AQI_"+aqi_data_type[i]];
+                        }
+                        else{
+                          displayed_sensor_data[i] = item[aqi_data_type[i]];
+                        }
+                    }                  
+                  }
+                  
+                  
 
                   marker.addListener('click', function() {
-                    infowindow.setContent("<p>AQI_CO : " + item['CO'] + 
-                                          "</br>AQI_SO2 : " + item['SO2'] + 
-                                          "</br>AQI_O3 : " + item['O3'] + 
-                                          "</br>AQI_NO2 : " + item['NO2'] + 
-                                          "</br>AQI_PM2.5 : " + item['PM2_5'] + 
-                                          "</br>temperature : " + item['temperature'] + 
-                                          "</br>datetime : " + item['datetime'] +
-                                          "</p>");
-                    infowindow.open(map, this);
+                    is_clicked_marker = 1;
+                    var device_post = $.post("/qi/device/google_map_clicked_device/process",{ssn : item['ssn']});
+
+                    device_post.done(function(data_val){
+                      displayed_sensor_name = data_val[0]['device_name'];
+                    
+
+                      for(var i = 0 ; i < aqi_data_type.length ; i ++){
+                        if(aqi_data_type[i] != 'temperature' && aqi_data_type[i] != 'datetime'){
+                          displayed_sensor_color[i] = item["AQI_" + aqi_data_type[i] + "_COLOR"];
+                          displayed_sensor_data[i] = item["AQI_"+aqi_data_type[i]];
+                        }
+                        else{
+                          displayed_sensor_data[i] = item[aqi_data_type[i]];
+                        }
+                      }
+                      setData_in_databox();
+                      var infowindow = new google.maps.InfoWindow();
+                      infowindow.setContent("<p><b>Device Name</b></p><hr>" + "<b>" + displayed_sensor_name + "</b>");
+                      infowindow.open(map, marker);
+                    });
+                    
                   });
                   setCircle(item,aqi_type);
                 }//end if
@@ -497,14 +643,30 @@
 
       function setCircle(item, aqi_type){
         if(aqi_type == 'all'){
+          aqi_temp = {
+                'CO' : item['AQI_CO'], 
+                'SO2' : item['AQI_SO2'], 
+                'O3' : item['AQI_O3'], 
+                'NO2' : item['AQI_NO2'], 
+                'PM2_5' : item['AQI_PM2_5']
+          };
+          var temp_aqi_max = 0;
+          var most_harzard_aqi = '';
+
+          $.each(aqi_temp, function(index, item){
+            if(index > temp_aqi_max){
+              most_harzard_aqi = item;
+            }
+          });
+
           var circ = new google.maps.Circle({
                     center: new google.maps.LatLng(item['latitude'], item['longitude']),
                     clickable:false,
-                    fillColor: item['AQI_CO_COLOR'],
+                    fillColor: item['AQI_'+most_harzard_aqi+'_COLOR'],
                     fillOpacity:0.3, 
                     map:map_setting,
                     radius:1000,
-                    strokeColor: item['AQI_CO_COLOR'],
+                    strokeColor: item['AQI_'+most_harzard_aqi+'_COLOR'],
                     strokeOpacity:0.3
           });// end circle
           gcircle.push(circ);
@@ -521,17 +683,37 @@
           });// end circle
           gcircle.push(circ);
         }
-        
       } 
+
+      function setData_in_databox(){
+        for(var i = 0; i < aqi_data_type.length ; i ++){
+          $("#" + aqi_data_type[i] + "_val").html(displayed_sensor_data[i]);
+          
+          if(aqi_data_type[i] != 'temperature' || aqi_data_type[i] != 'datetime') 
+            $("#div_" + aqi_data_type[i]).attr('style','background-color : '+displayed_sensor_color[i]+' !important ; flex-direction : row; margin-bottom:20px ');
+        }
+        $("#device_name_val").html(displayed_sensor_name);
+      }
          
-            
+      function remove_pin(){
+         for(var i = 0 ; i < gmarker.length ; i ++){
+              if(gmarker[i].getMap() != null)
+                gmarker[i].setMap(null);
+              
+            }
+
+            for(var i = 0 ; i < gcircle.length ; i++){
+              if(gcircle[i].getMap() != null)
+                gcircle[i].setMap(null);
+            }
+      }
     </script>
 
   
-    <!--Google Map API-->
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgrRKZjmZGHOCm2Ohq0PqnVoAJVR2u7Zg&callback=loadMap">
-    </script>
+  <!--Google Map API-->
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgrRKZjmZGHOCm2Ohq0PqnVoAJVR2u7Zg&callback=loadMap&language=en&region=US">
+  </script>
 
   <!-- Bootstrap core JavaScript-->
   <script src="/vendor/jquery/jquery.min.js"></script>
