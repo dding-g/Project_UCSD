@@ -606,7 +606,7 @@ li{
               "O3" : "O3 Chart (O3)",
               "NO2" : "NO2 Chart (NO2)",
               "PM2_5" : "PM2.5 Chart (pm25)",
-              "temperature" : "Temperature Chart()"
+              "temperature" : "Temperature Chart(C)"
               };
 
             for(i = 0 ; i < chart_drawed.length ; i ++){
@@ -711,7 +711,7 @@ li{
           // Initialize Google Maps
           var mapOptions = {
             center:new google.maps.LatLng(0, 0),
-            zoom: 11,
+            zoom: 11
           }
           map_setting = new google.maps.Map(document.getElementById("map"), mapOptions);
           gmarker = [];

@@ -332,7 +332,7 @@
 
   <script>
     $('#sign_out_form').submit(function( event ) {
-      var posting = $.post( "/qi/user/sign-out/process", { usn: 19 } );
+      var posting = $.post( "/qi/user/sign-out/process", { usn: localStorage.getItem('usn') } );
 
       posting.done(function( data ) {
 
@@ -529,7 +529,7 @@
     intervals () {
       window.setInterval(() => {
         
-        var posting = $.post( "/qi/device/heart_rate/realtime/process", { usn: 19 } );
+        var posting = $.post( "/qi/device/heart_rate/realtime/process", { usn: localStorage.getItem('usn') } );
         
         posting.done(function(heart_data){
           getNewSeries(new Date().getTime(), heart_data.heart_rate)

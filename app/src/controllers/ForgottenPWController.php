@@ -27,7 +27,7 @@ final class ForgottenPWController extends BaseController
 			$update_cpw_status = json_decode($this->db_model->update_verification_cpw($user_data['verification_code_cpw'], $usn), true);
 			
 			if($update_cpw_status['result_code'] == 1)
-				return json_encode($user_data);
+				return json_encode($user_data['verification_code_cpw']);
 			else
 				return json_encode($update_cpw_status);
 				

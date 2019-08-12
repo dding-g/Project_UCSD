@@ -444,6 +444,7 @@
       displayed_sensor_name = "";
       aqi_data_type = ['CO', 'SO2', 'O3', 'NO2', 'PM2_5', 'temperature', 'datetime'];
       is_clicked_marker = 0;
+      clicked_data = [];
 
       if(usn == null){
         document.getElementById('email').innerHTML = "<Button class='btn btn-primary btn-user btn-block' onclick = 'sign_in_btn_click()'>SIGN IN</Button>";
@@ -492,7 +493,7 @@
           // Initialize Google Maps
           var mapOptions = {
             center:new google.maps.LatLng(aq_data_load.latitude, aq_data_load.longitude),
-            zoom: 15,
+            zoom: 18
           }
           map_setting = new google.maps.Map(document.getElementById("map"), mapOptions);
           gmarker = [];
@@ -506,7 +507,7 @@
           { lat_min : sw.lat(), lng_min : sw.lng(), lat_max : ne.lat(), lng_max : ne.lng() , aqi_type : aqi_type, usn : -1, ssn : -1} );
               
           posting.done( function (data) {
-
+            
            
             if(aqi_type == 'all'){
               $.each(data,function(index, item){
@@ -543,11 +544,17 @@
                   
 
                   marker.addListener('click', function() {
+
+                    clicked_data = {
+                      "usn" : item['usn'],
+                      "ssn" : item['ssn']
+                    };
+
                     is_clicked_marker = 1;
                     var device_post = $.post("/qi/device/google_map_clicked_device/process",{ssn : item['ssn']});
 
                     device_post.done(function(data_val){
-                      displayed_sensor_name = data_val[0]['device_name'];
+                    displayed_sensor_name = data_val[0]['device_name'];
                     
 
                       for(var i = 0 ; i < aqi_data_type.length ; i ++){
@@ -568,7 +575,9 @@
                   });
                   setCircle(item,aqi_type);
                 }//end if
-
+                if( item["usn"] == clicked_data["usn"] && item["ssn"] == clicked_data["ssn"]){
+                      setData_in_databox();
+                }
               });// end for each
 
             }else{
@@ -589,20 +598,14 @@
 
                   var infowindow = new google.maps.InfoWindow();
 
-                  gmarker.push(marker);
-
-                  marker.addListener('click', function() {
-                    infowindow.setContent("<p>"+aqi_type+" : " + item[aqi_type] +
-                                          "</br>datetime : " + item['datetime'] +
-                                          "</p>");
-                    infowindow.open(map, this);
-                  });
                 }
                 setCircle(item,aqi_type);
               });
             }//end else
+
             
           });//end done
+          
           
         }//end setPin()
         
@@ -665,7 +668,7 @@
                     fillColor: item['AQI_'+most_harzard_aqi+'_COLOR'],
                     fillOpacity:0.3, 
                     map:map_setting,
-                    radius:1000,
+                    radius:10,
                     strokeColor: item['AQI_'+most_harzard_aqi+'_COLOR'],
                     strokeOpacity:0.3
           });// end circle
@@ -677,7 +680,7 @@
                     fillColor: item['AQI_' + aqi_type + '_COLOR'],
                     fillOpacity:0.3, 
                     map:map_setting,
-                    radius:1000,
+                    radius:10,
                     strokeColor: item['AQI_' + aqi_type + '_COLOR'],
                     strokeOpacity:0.3
           });// end circle
@@ -689,10 +692,11 @@
         for(var i = 0; i < aqi_data_type.length ; i ++){
           $("#" + aqi_data_type[i] + "_val").html(displayed_sensor_data[i]);
           
-          if(aqi_data_type[i] != 'temperature' || aqi_data_type[i] != 'datetime') 
+          if(aqi_data_type[i] != 'temperature' || aqi_data_type[i] != 'datetime') {
+            $("#device_name_val").html(displayed_sensor_name);
             $("#div_" + aqi_data_type[i]).attr('style','background-color : '+displayed_sensor_color[i]+' !important ; flex-direction : row; margin-bottom:20px ');
+          }
         }
-        $("#device_name_val").html(displayed_sensor_name);
       }
          
       function remove_pin(){

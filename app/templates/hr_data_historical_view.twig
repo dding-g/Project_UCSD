@@ -331,7 +331,7 @@
 
   <script>
     $('#sign_out_form').submit(function( event ) {
-      var posting = $.post( "/qi/user/sign-out/process", { usn: 19 } );
+      var posting = $.post( "/qi/user/sign-out/process", { usn: localStorage.getItem("usn") } );
 
       posting.done(function( data ) {
 
@@ -457,7 +457,7 @@
     $("#btn_heart_rate_historical_search").click(function(){
       chart = am4core.create("chartdiv", am4charts.XYChart);
       var posting = $.post( "/qi/device/heart_rate/historical/process", 
-       { usn: 19 , date_start : $("#date_start").val(), date_end : $("#date_end").val()} );
+       { usn: localStorage.getItem("usn") , date_start : $("#date_start").val(), date_end : $("#date_end").val()} );
 
       posting.done(function(data){
     // Set input format for the dates
