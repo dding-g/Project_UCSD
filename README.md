@@ -67,6 +67,6 @@
 
 - 대기 오염도를 측정 및 기록 Display (Google Map API, Google Chart)
 
-![image-20200511224915154](C:\Users\jmg\AppData\Roaming\Typora\typora-user-images\image-20200511224915154.png)
+![image](https://user-images.githubusercontent.com/29707967/81569690-93337c80-93da-11ea-82b0-b5e7f6a1e4c4.png)
 
 
