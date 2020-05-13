@@ -39,9 +39,14 @@
 
 ### 📕 프로젝트 설계
 
-
-
-
+- [Reference Model](https://github.com/dding-g/Project_UCSD/blob/qi_jmg/%EC%84%A4%EA%B3%84/ReferenceModel/reference%20model.pngg)
+- [SystemArchitecture](https://github.com/dding-g/Project_UCSD/blob/qi_jmg/%EC%84%A4%EA%B3%84/SystemArchitecture/System%20Architecture%20-%20group%20A.png)
+- [DB Schema](https://github.com/dding-g/Project_UCSD/blob/qi_jmg/%EC%84%A4%EA%B3%84/DB_Schema/TeamA_Schema_kangaroo.png)
+- [Procedure](https://github.com/dding-g/Project_UCSD/tree/qi_jmg/%EC%84%A4%EA%B3%84/Procedure)
+  * [User Management](https://github.com/dding-g/Project_UCSD/tree/qi_jmg/%EC%84%A4%EA%B3%84/Procedure/UserManagement)
+  * [Sensor](https://github.com/dding-g/Project_UCSD/tree/qi_jmg/%EC%84%A4%EA%B3%84/Procedure/Sensor)
+  * [Data Monitoring](https://github.com/dding-g/Project_UCSD/tree/qi_jmg/%EC%84%A4%EA%B3%84/Procedure/DataMornitoring)
+  * [Data Management](https://github.com/dding-g/Project_UCSD/tree/qi_jmg/%EC%84%A4%EA%B3%84/Procedure/DataManagement)
 
 ---
 
